@@ -1,0 +1,139 @@
+{
+  "books": [
+    {
+      "id": "1",
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "edition": "Scribner, 2004",
+      "publisher": "Scribner",
+      "isbn": "9780743273565",
+      "description": "A classic American novel set in the Jazz Age, exploring themes of wealth, love, and the American Dream.",
+      "images": [
+        "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400"
+      ],
+      "ownerId": "user1",
+      "ownerName": "Aminul Islam",
+      "dailyRate": 30,
+      "deposit": 350,
+      "condition": "Good - Minor shelf wear",
+      "conditionScore": 85,
+      "fingerprint": "hash-gatsby-001",
+      "available": true
+    },
+    {
+      "id": "2",
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "edition": "Harper Perennial, 2006",
+      "publisher": "Harper Perennial",
+      "isbn": "9780061120084",
+      "description": "A gripping tale of racial injustice and childhood innocence in the American South.",
+      "images": [
+        "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400"
+      ],
+      "ownerId": "user2",
+      "ownerName": "Fatima Rahman",
+      "dailyRate": 25,
+      "deposit": 300,
+      "condition": "Excellent - Like new",
+      "conditionScore": 95,
+      "fingerprint": "hash-mockingbird-001",
+      "available": true
+    },
+    {
+      "id": "3",
+      "title": "1984",
+      "author": "George Orwell",
+      "edition": "Signet Classic, 1961",
+      "publisher": "Signet Classic",
+      "isbn": "9780451524935",
+      "description": "A dystopian masterpiece exploring surveillance, totalitarianism, and individual freedom.",
+      "images": [
+        "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400"
+      ],
+      "ownerId": "user1",
+      "ownerName": "Aminul Islam",
+      "dailyRate": 35,
+      "deposit": 400,
+      "condition": "Good - Some yellowing of pages",
+      "conditionScore": 78,
+      "fingerprint": "hash-1984-001",
+      "available": false
+    },
+    {
+      "id": "4",
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "edition": "Penguin Classics, 2003",
+      "publisher": "Penguin Classics",
+      "isbn": "9780141439518",
+      "description": "A timeless romance exploring manners, marriage, and morality in Regency England.",
+      "images": [
+        "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400"
+      ],
+      "ownerId": "user3",
+      "ownerName": "Nusrat Jahan",
+      "dailyRate": 28,
+      "deposit": 320,
+      "condition": "Very Good - Minor annotations",
+      "conditionScore": 88,
+      "fingerprint": "hash-pride-001",
+      "available": true
+    },
+    {
+      "id": "5",
+      "title": "The Catcher in the Rye",
+      "author": "J.D. Salinger",
+      "edition": "Little, Brown, 1991",
+      "publisher": "Little, Brown",
+      "isbn": "9780316769174",
+      "description": "A controversial coming-of-age story following teenage Holden Caulfield.",
+      "images": [
+        "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400"
+      ],
+      "ownerId": "user2",
+      "ownerName": "Fatima Rahman",
+      "dailyRate": 32,
+      "deposit": 370,
+      "condition": "Good - Cover wear",
+      "conditionScore": 82,
+      "fingerprint": "hash-catcher-001",
+      "available": true
+    }
+  ],
+  "users": [
+    {
+      "id": "user1",
+      "name": "Aminul Islam",
+      "email": "aminul@example.com",
+      "reputation": 4.8,
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aminul"
+    },
+    {
+      "id": "user2",
+      "name": "Fatima Rahman",
+      "email": "fatima@example.com",
+      "reputation": 4.9,
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima"
+    },
+    {
+      "id": "user3",
+      "name": "Nusrat Jahan",
+      "email": "nusrat@example.com",
+      "reputation": 4.7,
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Nusrat"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "tx1",
+      "bookId": "3",
+      "borrowerId": "user2",
+      "startDate": "2025-01-01",
+      "endDate": "2025-01-15",
+      "status": "active",
+      "totalCost": 490,
+      "deposit": 400
+    }
+  ]
+}

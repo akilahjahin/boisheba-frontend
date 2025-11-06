@@ -2,6 +2,8 @@
 
 BoiSheba is a community-driven book-sharing platform that uses AI to streamline book lending. Upload a book photo, and our AI extracts metadata and assesses condition. Borrow books with blockchain-secured deposits.
 
+**Demo Project for SOLVIO AI Hackathon 2025 by Sheba Platform, Bangladesh**
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -14,14 +16,14 @@ BoiSheba is a community-driven book-sharing platform that uses AI to streamline 
 # Install dependencies
 npm install
 
-# Start development server
-npm run dev
+# Initialize MSW (first time only)
+npx msw init public/
 
-# Start with mock API (coming soon)
-npm run dev:demo
+# Start development server (with MSW mock API)
+npm run dev
 ```
 
-The app will run at `http://localhost:8080`
+The app will run at `http://localhost:8080` with mock API enabled by default.
 
 ## 📁 Project Structure
 
@@ -170,8 +172,6 @@ This is a hackathon project. For production use:
 
 ## 📄 License
 
-MIT - Hackathon Demo Project
+MIT - Solvio AI Hackathon Demo Project Frontend
 
 ---
-
-**For questions or backend API specs, contact the backend team.**

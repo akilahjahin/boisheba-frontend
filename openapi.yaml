@@ -1,0 +1,340 @@
+openapi: 3.0.0
+info:
+  title: BoiSheba API
+  description: AI-powered book sharing platform API specification
+  version: 1.0.0
+  contact:
+    name: BoiSheba Team
+    email: support@boisheba.com
+
+servers:
+  - url: http://localhost:8080/api
+    description: Local Spring Boot backend
+  - url: https://api.boisheba.com/api
+    description: Production backend
+
+paths:
+  /books:
+    get:
+      summary: List all books
+      parameters:
+        - name: q
+          in: query
+          description: Search query (title, author, ISBN)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+
+    post:
+      summary: Create a new book listing
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                author:
+                  type: string
+                isbn:
+                  type: string
+                edition:
+                  type: string
+                publisher:
+                  type: string
+                description:
+                  type: string
+                dailyRate:
+                  type: number
+                deposit:
+                  type: number
+                condition:
+                  type: string
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+                - title
+                - author
+                - dailyRate
+                - deposit
+      responses:
+        '201':
+          description: Book created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+
+  /books/{id}:
+    get:
+      summary: Get book by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Book details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '404':
+          description: Book not found
+
+  /books/{id}/compare:
+    post:
+      summary: Compare current book condition with original
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                currentImage:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Comparison result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  similarity:
+                    type: number
+                    description: Similarity score (0-100)
+                  differences:
+                    type: array
+                    items:
+                      type: string
+
+  /auth/login:
+    post:
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+                  token:
+                    type: string
+
+  /auth/signup:
+    post:
+      summary: User registration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required:
+                - name
+                - email
+                - password
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+                  token:
+                    type: string
+
+  /transactions:
+    post:
+      summary: Create borrow request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bookId:
+                  type: string
+                startDate:
+                  type: string
+                  format: date
+                endDate:
+                  type: string
+                  format: date
+                totalCost:
+                  type: number
+                deposit:
+                  type: number
+              required:
+                - bookId
+                - startDate
+                - endDate
+      responses:
+        '201':
+          description: Transaction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+
+  /transactions/my:
+    get:
+      summary: Get current user's transactions
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+
+  /recommendations:
+    get:
+      summary: Get personalized book recommendations
+      parameters:
+        - name: userId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recommended books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        author:
+          type: string
+        edition:
+          type: string
+        publisher:
+          type: string
+        isbn:
+          type: string
+        description:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        ownerId:
+          type: string
+        ownerName:
+          type: string
+        dailyRate:
+          type: number
+        deposit:
+          type: number
+        condition:
+          type: string
+        conditionScore:
+          type: number
+        fingerprint:
+          type: string
+        available:
+          type: boolean
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        reputation:
+          type: number
+        avatar:
+          type: string
+
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+        bookId:
+          type: string
+        borrowerId:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        status:
+          type: string
+          enum: [pending, active, completed, cancelled]
+        totalCost:
+          type: number
+        deposit:
+          type: number

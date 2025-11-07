@@ -2,44 +2,48 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { loginUser, StoredAuth } from "@/utils/api";
 
 interface LoginProps {
-  setIsLoggedIn: (value: boolean) => void;
-  setIsAdmin?: (value: boolean) => void;
+  onAuthSuccess: (auth: StoredAuth) => void;
 }
 
-const Login = ({ setIsLoggedIn, setIsAdmin }: LoginProps) => {
+const Login = ({ onAuthSuccess }: LoginProps) => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!emailOrPhone || !password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
     setIsLoading(true);
 
-    // TODO: Replace with actual API call
-    setTimeout(() => {
-      if (email && password) {
-        // Check if admin credentials
-        if (email === "admin@example.com" && password === "admin123") {
-          setIsAdmin?.(true);
-          toast.success("Welcome back, Admin!");
-        } else {
-          setIsAdmin?.(false);
-          toast.success("Welcome back!");
-        }
-
-        setIsLoggedIn(true);
-        navigate("/dashboard");
-      } else {
-        toast.error("Please fill in all fields");
-      }
+    try {
+      const auth = await loginUser({ emailOrPhone, password });
+      const displayName = auth.user?.name?.split(" ")[0] ?? "there";
+      toast.success(`Welcome back, ${displayName}!`);
+      onAuthSuccess(auth);
+      navigate("/dashboard");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unable to sign in";
+      toast.error(message);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -59,13 +63,13 @@ const Login = ({ setIsLoggedIn, setIsAdmin }: LoginProps) => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="emailOrPhone">Email or Phone Number</Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="your@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                id="emailOrPhone"
+                type="text"
+                placeholder="you@example.com or 01XXXXXXXXX"
+                value={emailOrPhone}
+                onChange={(e) => setEmailOrPhone(e.target.value)}
                 required
               />
             </div>
@@ -89,9 +93,6 @@ const Login = ({ setIsLoggedIn, setIsAdmin }: LoginProps) => {
             <Link to="/signup" className="text-primary hover:underline">
               Sign up
             </Link>
-          </div>
-          <div className="mt-2 text-center text-xs text-muted-foreground">
-            Admin: admin@example.com / admin123
           </div>
         </CardContent>
       </Card>

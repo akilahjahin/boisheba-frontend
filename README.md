@@ -7,6 +7,7 @@ BoiSheba is a community-driven book-sharing platform that uses AI to streamline 
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 18+ and npm
 - Modern browser with ES6 support
 
@@ -19,11 +20,13 @@ npm install
 # Initialize MSW (first time only)
 npx msw init public/
 
-# Start development server (with MSW mock API)
+# Start development server (uses Spring Boot backend)
 npm run dev
 ```
 
-The app will run at `http://localhost:8080` with mock API enabled by default.
+The app will run at `http://localhost:8080` and connect to the Spring Boot backend at `http://localhost:8081/api` by default.
+
+**Note:** Make sure your Spring Boot backend is running on port 8081 before starting the frontend.
 
 ## 📁 Project Structure
 
@@ -64,6 +67,7 @@ src/
 ## 🎨 Features
 
 ### Implemented (Demo-Ready)
+
 - ✅ **Landing Page**: Hero section with sliding images and feature highlights
 - ✅ **User Authentication**: Login/signup flows with proper state management
 - ✅ **Book Management**: Add books with image upload and OCR processing
@@ -79,6 +83,7 @@ src/
 - ✅ **Mock API**: MSW with all required endpoints
 
 ### TODO (Backend Integration Required)
+
 - [ ] Real OCR with Tesseract.js or backend API
 - [ ] Blockchain escrow integration
 - [ ] Payment processing
@@ -90,6 +95,7 @@ src/
 ## 🛠 Tech Stack
 
 ### Frontend
+
 - **Framework**: React 18 + TypeScript
 - **Build Tool**: Vite
 - **Styling**: Tailwind CSS
@@ -100,12 +106,14 @@ src/
 - **OCR**: Tesseract.js (client-side, coming soon)
 
 ### Backend (Mock)
+
 - **API**: Mock Service Worker (MSW)
 - **Data**: JSON seed with 40 books including Bengali titles
 
 ## 📊 Mock Data
 
 The application includes a comprehensive mock dataset with:
+
 - 40 books (including 20 Bengali titles)
 - 4 users (including admin)
 - 3 transactions
@@ -113,38 +121,46 @@ The application includes a comprehensive mock dataset with:
 
 ## 🔌 API
 
-### Mock Endpoints
-All frontend functionality is supported by mock API endpoints:
+### Spring Boot User Service
 
-```javascript
-// Authentication
-POST /api/auth/login
-POST /api/auth/signup
+The frontend connects to your Spring Boot backend at `http://localhost:8081/api` by default. The following endpoints are used:
 
-// Books
-GET /api/books
-GET /api/books/:id
-POST /api/books
-POST /api/books/:id/compare
-
-// Transactions
-POST /api/borrow
-GET /api/transactions/my
-
-// Admin
-GET /api/admin/users
-PATCH /api/admin/users/:id
-GET /api/admin/transactions
-PATCH /api/admin/transactions/:id
-
-// Recommendations
-GET /api/recommendations
+```http
+POST   /api/users/register
+POST   /api/users/login
+GET    /api/users/me
+GET    /api/users/{userId}
+PUT    /api/users/profile
+POST   /api/users/change-password
+POST   /api/users/forgot-password
+POST   /api/users/reset-password
+POST   /api/users/verify-email
+POST   /api/users/verify-phone
+PUT    /api/users/{userId}/trust-score?score={value}
+POST   /api/users/search
+GET    /api/users/admin/stats
+GET    /api/users/health
 ```
+
+Books, transactions, and recommendations will use `/api/books`, `/api/transactions`, and `/api/recommendations` routes once implemented.
+
+### Using Mock Data (Optional)
+
+If you want to use mock data for UI development without the backend, comment out `VITE_API_BASE_URL` in the `.env` file:
+
+```bash
+# .env
+# VITE_API_BASE_URL=http://localhost:8081/api
+```
+
+Then restart the dev server. MSW will provide mock responses.
 
 ## 🧪 Testing & Demo
 
 ### Demo Script
+
 **Step-by-Step Demo Flow:**
+
 1. **Landing Page** → Click "Get Started"
 2. **Sign Up** → Create account with mock credentials
 3. **Add Book** → Upload book image → Watch OCR processing (simulated)
@@ -155,7 +171,9 @@ GET /api/recommendations
 8. **Admin Panel** → Login as admin → Manage users → Approve transactions
 
 ### Recording Phase 2 Video
+
 **Recommended Recording Script:**
+
 - **Introduction (0:30)**: Show BoiSheba logo and tagline
 - **Feature Walkthrough (1:00)**: Demonstrate key features
   - AI-powered OCR
@@ -180,6 +198,7 @@ GET /api/recommendations
 ## 🚢 Deployment
 
 ### Development Deployment
+
 The project runs successfully in development mode with full mock API functionality. For production deployment, consider:
 
 - **Netlify**: Drag and drop the `dist` folder
@@ -189,6 +208,7 @@ The project runs successfully in development mode with full mock API functionali
 ## 🤝 Contributing
 
 This is a hackathon project. For production use:
+
 1. Implement real backend integration
 2. Add comprehensive error handling
 3. Add form validation with Zod

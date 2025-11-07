@@ -24,14 +24,14 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: List of books
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Book'
+                  $ref: "#/components/schemas/Book"
 
     post:
       summary: Create a new book listing
@@ -71,12 +71,12 @@ paths:
                 - dailyRate
                 - deposit
       responses:
-        '201':
+        "201":
           description: Book created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Book'
+                $ref: "#/components/schemas/Book"
 
   /books/{id}:
     get:
@@ -88,13 +88,13 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Book details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Book'
-        '404':
+                $ref: "#/components/schemas/Book"
+        "404":
           description: Book not found
 
   /books/{id}/compare:
@@ -117,7 +117,7 @@ paths:
                   type: string
                   format: binary
       responses:
-        '200':
+        "200":
           description: Comparison result
           content:
             application/json:
@@ -132,70 +132,234 @@ paths:
                     items:
                       type: string
 
-  /auth/login:
+  /users/register:
     post:
-      summary: User login
+      summary: Register a new user
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  format: email
-                password:
-                  type: string
-              required:
-                - email
-                - password
+              $ref: "#/components/schemas/RegisterRequest"
       responses:
-        '200':
+        "201":
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+
+  /users/login:
+    post:
+      summary: Authenticate user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
           description: Login successful
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  user:
-                    $ref: '#/components/schemas/User'
-                  token:
-                    type: string
+                $ref: "#/components/schemas/AuthResponse"
 
-  /auth/signup:
-    post:
-      summary: User registration
+  /users/me:
+    get:
+      summary: Get current user profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Current user profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: Unauthorized
+
+  /users/{userId}:
+    get:
+      summary: Get user by ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: User not found
+
+  /users/profile:
+    put:
+      summary: Update current user profile
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                  format: email
-                password:
-                  type: string
-              required:
-                - name
-                - email
-                - password
+              $ref: "#/components/schemas/UpdateProfileRequest"
       responses:
-        '201':
-          description: User created
+        "200":
+          description: Updated profile
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  user:
-                    $ref: '#/components/schemas/User'
-                  token:
-                    type: string
+                $ref: "#/components/schemas/User"
+        "401":
+          description: Unauthorized
+
+  /users/change-password:
+    post:
+      summary: Change password
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordRequest"
+      responses:
+        "200":
+          description: Password updated
+        "401":
+          description: Unauthorized
+
+  /users/forgot-password:
+    post:
+      summary: Forgot password request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ForgotPasswordRequest"
+      responses:
+        "200":
+          description: Password reset link sent
+
+  /users/reset-password:
+    post:
+      summary: Reset password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordRequest"
+      responses:
+        "200":
+          description: Password reset successful
+
+  /users/verify-email:
+    post:
+      summary: Verify email address
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyEmailRequest"
+      responses:
+        "200":
+          description: Email verified
+        "401":
+          description: Unauthorized
+
+  /users/verify-phone:
+    post:
+      summary: Verify phone number
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyPhoneRequest"
+      responses:
+        "200":
+          description: Phone verified
+        "401":
+          description: Unauthorized
+
+  /users/{userId}/trust-score:
+    put:
+      summary: Update user trust score
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: score
+          in: query
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Trust score updated
+        "404":
+          description: User not found
+
+  /users/search:
+    post:
+      summary: Search users
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserSearchRequest"
+      responses:
+        "200":
+          description: Paged users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserPage"
+
+  /users/admin/stats:
+    get:
+      summary: Get user statistics
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Aggregated user stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserStatsResponse"
+
+  /users/health:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: Service is running
+          content:
+            text/plain:
+              schema:
+                type: string
 
   /transactions:
     post:
@@ -224,25 +388,25 @@ paths:
                 - startDate
                 - endDate
       responses:
-        '201':
+        "201":
           description: Transaction created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Transaction'
+                $ref: "#/components/schemas/Transaction"
 
   /transactions/my:
     get:
       summary: Get current user's transactions
       responses:
-        '200':
+        "200":
           description: List of transactions
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Transaction'
+                  $ref: "#/components/schemas/Transaction"
 
   /recommendations:
     get:
@@ -253,16 +417,21 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Recommended books
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Book'
+                  $ref: "#/components/schemas/Book"
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     Book:
       type: object
@@ -306,15 +475,29 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         name:
           type: string
         email:
+          type: string
+        phone:
           type: string
         reputation:
           type: number
         avatar:
           type: string
+        trustScore:
+          type: number
+        isActive:
+          type: boolean
+        booksShared:
+          type: integer
+        isAdmin:
+          type: boolean
+        roles:
+          type: array
+          items:
+            type: string
 
     Transaction:
       type: object
@@ -338,3 +521,185 @@ components:
           type: number
         deposit:
           type: number
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        refreshToken:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"
+
+    LoginRequest:
+      type: object
+      properties:
+        emailOrPhone:
+          type: string
+        password:
+          type: string
+      required:
+        - emailOrPhone
+        - password
+
+    RegisterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          pattern: '^(\+88)?01[3-9]\d{8}$'
+        password:
+          type: string
+          minLength: 6
+        address:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        postalCode:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+      required:
+        - name
+        - email
+        - phone
+        - password
+
+    UpdateProfileRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+        bio:
+          type: string
+        profileImageUrl:
+          type: string
+          format: uri
+        address:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        postalCode:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+
+    ChangePasswordRequest:
+      type: object
+      properties:
+        currentPassword:
+          type: string
+        newPassword:
+          type: string
+          minLength: 6
+      required:
+        - currentPassword
+        - newPassword
+
+    ForgotPasswordRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+        - email
+
+    ResetPasswordRequest:
+      type: object
+      properties:
+        token:
+          type: string
+        newPassword:
+          type: string
+      required:
+        - token
+        - newPassword
+
+    VerifyEmailRequest:
+      type: object
+      properties:
+        code:
+          type: string
+      required:
+        - code
+
+    VerifyPhoneRequest:
+      type: object
+      properties:
+        code:
+          type: string
+      required:
+        - code
+
+    UserSearchRequest:
+      type: object
+      properties:
+        keyword:
+          type: string
+        status:
+          type: string
+        page:
+          type: integer
+        size:
+          type: integer
+        roles:
+          type: array
+          items:
+            type: string
+
+    UserPage:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+        size:
+          type: integer
+        number:
+          type: integer
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+        empty:
+          type: boolean
+
+    UserStatsResponse:
+      type: object
+      properties:
+        totalUsers:
+          type: integer
+        activeUsers:
+          type: integer
+        verifiedUsers:
+          type: integer
+        adminUsers:
+          type: integer

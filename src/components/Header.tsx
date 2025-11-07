@@ -3,17 +3,25 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { NavLink } from "@/components/NavLink";
 import LanguageToggle from "@/components/LanguageToggle";
-import { useI18n, Language } from "@/lib/i18n";
+import { useI18n } from "@/lib/i18n";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Menu, X, Moon, Sun } from "lucide-react";
+import { User } from "@/utils/api";
 
 interface HeaderProps {
   isLoggedIn?: boolean;
   isAdmin?: boolean;
+  user?: User | null;
+  onLogout?: () => void;
 }
 
-export default function Header({ isLoggedIn = false, isAdmin = false }: HeaderProps) {
-  const { language, t } = useI18n();
+export default function Header({
+  isLoggedIn = false,
+  isAdmin = false,
+  user = null,
+  onLogout,
+}: HeaderProps) {
+  const { language } = useI18n();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
@@ -28,14 +36,22 @@ export default function Header({ isLoggedIn = false, isAdmin = false }: HeaderPr
     { name: language === "en" ? "Books" : "বই", href: "/books" },
     ...(isLoggedIn ? [
       { name: language === "en" ? "Dashboard" : "ড্যাশবোর্ড", href: "/dashboard" },
+      { name: language === "en" ? "Profile" : "প্রোফাইল", href: "/profile" },
       ...(isAdmin ? [{ name: language === "en" ? "Admin" : "অ্যাডমিন", href: "/admin" }] : [])
     ] : [])
   ];
 
   const authButtons = isLoggedIn ? (
-    <Button variant="outline" onClick={() => console.log("Logout")}>
-      {language === "en" ? "Logout" : "লগআউট"}
-    </Button>
+    <div className="flex items-center gap-2">
+      {user?.name && (
+        <span className="hidden text-sm font-medium text-muted-foreground sm:inline">
+          {language === "en" ? `Hi, ${user.name.split(" ")[0]}` : user.name}
+        </span>
+      )}
+      <Button variant="outline" onClick={() => onLogout?.()}>
+        {language === "en" ? "Logout" : "লগআউট"}
+      </Button>
+    </div>
   ) : (
     <>
       <Button variant="ghost" asChild>

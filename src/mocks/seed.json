@@ -1,3 +1,4 @@
+
 {
   "books": [
     {
@@ -7,9 +8,9 @@
       "edition": "Scribner, 2004",
       "publisher": "Scribner",
       "isbn": "9780743273565",
-      "description": "A classic American novel set in the Jazz Age, exploring themes of wealth, love, and the American Dream.",
+      "description": "A classic American novel set in Jazz Age, exploring themes of wealth, love, and American Dream.",
       "images": [
-        "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400"
+        "https://www.maplepress.co.in/cdn/shop/products/thegreatgatsby_700x700.jpg?v=1650952292"
       ],
       "ownerId": "user1",
       "ownerName": "Aminul Islam",
@@ -27,9 +28,9 @@
       "edition": "Harper Perennial, 2006",
       "publisher": "Harper Perennial",
       "isbn": "9780061120084",
-      "description": "A gripping tale of racial injustice and childhood innocence in the American South.",
+      "description": "A gripping tale of racial injustice and childhood innocence in American South.",
       "images": [
-        "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400"
+        "https://bfbooks.com/cdn/shop/files/To_Kill_a_Mockingbird_Harper_Lee_processed.jpg?v=1751405957&width=546"
       ],
       "ownerId": "user2",
       "ownerName": "Fatima Rahman",
@@ -49,7 +50,7 @@
       "isbn": "9780451524935",
       "description": "A dystopian masterpiece exploring surveillance, totalitarianism, and individual freedom.",
       "images": [
-        "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400"
+        "https://thumbs.dreamstime.com/b/sydney-australia-march-closeup-book-cover-george-orwell-369999644.jpg?w=400"
       ],
       "ownerId": "user1",
       "ownerName": "Aminul Islam",
@@ -69,7 +70,7 @@
       "isbn": "9780141439518",
       "description": "A timeless romance exploring manners, marriage, and morality in Regency England.",
       "images": [
-        "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400"
+        "https://historylizzie.co.uk/wp-content/uploads/2022/01/img_7303_original.jpg?w=1024"
       ],
       "ownerId": "user3",
       "ownerName": "Nusrat Jahan",
@@ -89,7 +90,7 @@
       "isbn": "9780316769174",
       "description": "A controversial coming-of-age story following teenage Holden Caulfield.",
       "images": [
-        "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400"
+        "https://onlinebooksoutlet.com/cdn/shop/products/the-catcher-in-the-rye-book-buy-onlinebooksoutlet.webp?v=1748526371&width=800"
       ],
       "ownerId": "user2",
       "ownerName": "Fatima Rahman",
@@ -99,41 +100,706 @@
       "conditionScore": 82,
       "fingerprint": "hash-catcher-001",
       "available": true
-    }
-  ],
-  "users": [
-    {
-      "id": "user1",
-      "name": "Aminul Islam",
-      "email": "aminul@example.com",
-      "reputation": 4.8,
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aminul"
     },
     {
-      "id": "user2",
-      "name": "Fatima Rahman",
-      "email": "fatima@example.com",
-      "reputation": 4.9,
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima"
+      "id": "6",
+      "title": "The Alchemist",
+      "author": "Paulo Coelho",
+      "edition": "HarperCollins, 1993",
+      "publisher": "HarperCollins",
+      "isbn": "9780061122415",
+      "description": "A mystical story about Santiago, an Andalusian shepherd boy who dreams of finding treasure.",
+      "images": [
+        "https://m.media-amazon.com/images/I/C16sBCSHNjL._CR162,0,1467,828_SR684,386_.png"
+      ],
+      "ownerId": "user3",
+      "ownerName": "Nusrat Jahan",
+      "dailyRate": 30,
+      "deposit": 350,
+      "condition": "Excellent - Like new",
+      "conditionScore": 92,
+      "fingerprint": "hash-alchemist-001",
+      "available": true
     },
     {
-      "id": "user3",
-      "name": "Nusrat Jahan",
-      "email": "nusrat@example.com",
-      "reputation": 4.7,
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Nusrat"
-    }
-  ],
-  "transactions": [
+      "id": "7",
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "edition": "Houghton Mifflin, 1937",
+      "publisher": "Houghton Mifflin",
+      "isbn": "9780618260300",
+      "description": "Bilbo Baggins' adventure with dwarves to reclaim their mountain home from a dragon.",
+      "images": [
+        "https://thumbs.dreamstime.com/b/hobbit-book-vintage-paperback-edition-written-j-r-tolkien-published-unwin-books-has-become-classic-childrens-142431128.jpg"
+      ],
+      "ownerId": "user1",
+      "ownerName": "Aminul Islam",
+      "dailyRate": 35,
+      "deposit": 400,
+      "condition": "Very Good - Minor wear",
+      "conditionScore": 87,
+      "fingerprint": "hash-hobbit-001",
+      "available": true
+    },
     {
-      "id": "tx1",
-      "bookId": "3",
-      "borrowerId": "user2",
-      "startDate": "2025-01-01",
-      "endDate": "2025-01-15",
-      "status": "active",
-      "totalCost": 490,
-      "deposit": 400
+      "id": "8",
+      "title": "Harry Potter and the Sorcerer's Stone",
+      "author": "J.K. Rowling",
+      "edition": "Scholastic, 1998",
+      "publisher": "Scholastic",
+      "isbn": "9780590353427",
+      "description": "The first book in the magical series about Harry Potter's journey at Hogwarts.",
+      "images": [
+        "https://images.pangobooks.com/images/88b1ade4-cc5a-472a-9cad-a695e94506d3?width=800&quality=85&crop=1%3A1"
+      ],
+      "ownerId": "user2",
+      "ownerName": "Fatima Rahman",
+      "dailyRate": 40,
+      "deposit": 450,
+      "condition": "Good - Some spine creasing",
+      "conditionScore": 80,
+      "fingerprint": "hash-harry-potter-001",
+      "available": true
+    },
+    {
+      "id": "9",
+      "title": "The Da Vinci Code",
+      "author": "Dan Brown",
+      "edition": "Doubleday, 2003",
+      "publisher": "Doubleday",
+      "isbn": "9780385504201",
+      "description": "A mystery thriller involving secret societies, ancient conspiracies, and religious history.",
+      "images": [
+        "https://pictures.abebooks.com/inventory/md/md31453992735.jpg"
+      ],
+      "ownerId": "user3",
+      "ownerName": "Nusrat Jahan",
+      "dailyRate": 28,
+      "deposit": 320,
+      "condition": "Very Good - Minor highlighting",
+      "conditionScore": 85,
+      "fingerprint": "hash-da-vinci-001",
+      "available": false
+    },
+    {
+      "id": "10",
+      "title": "The Kite Runner",
+      "author": "Khaled Hosseini",
+      "edition": "Riverhead Books, 2003",
+      "publisher": "Riverhead Books",
+      "isbn": "9781573222457",
+      "description": "A story of friendship, betrayal, and redemption set against the backdrop of Afghanistan's tumultuous history.",
+      "images": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBJkiPn5Csn5qeekOl8ZpiWxpYu1zmbfEnSQ&s"
+      ],
+      "ownerId": "user1",
+      "ownerName": "Aminul Islam",
+      "dailyRate": 32,
+      "deposit": 370,
+      "condition": "Excellent - Like new",
+      "conditionScore": 93,
+      "fingerprint": "hash-kite-runner-001",
+      "available": true
+    },
+    {
+      "id": "11",
+      "title": "Life of Pi",
+      "author": "Yann Martel",
+      "edition": "Knopf Canada, 2001",
+      "publisher": "Knopf Canada",
+      "isbn": "9780676973778",
+      "description": "A philosophical novel about a boy stranded on a lifeboat with a Bengal tiger.",
+      "images": [
+        "https://m.media-amazon.com/images/I/61Qc8Qo5JpL._AC_UF1000,1000_QL80_.jpg"
+      ],
+      "ownerId": "user2",
+      "ownerName": "Fatima Rahman",
+      "dailyRate": 30,
+      "deposit": 350,
+      "condition": "Good - Water damage on cover",
+      "conditionScore": 75,
+      "fingerprint": "hash-life-of-pi-001",
+      "available": true
+    },
+    {
+      "id": "12",
+      "title": "The Hunger Games",
+      "author": "Suzanne Collins",
+      "edition": "Scholastic Press, 2008",
+      "publisher": "Scholastic Press",
+      "isbn": "9780439023528",
+      "description": "A dystopian novel set in Panem, where teenagers are forced to fight to the death.",
+      "images": [
+        "https://i.redd.it/my-current-hunger-games-book-collection-v0-gh5h0uemm3lb1.jpg?width=3024&format=pjpg&auto=webp&s=4d35221bc8908b9594c71d7f1337515c0827f3f7"
+      ],
+      "ownerId": "user3",
+      "ownerName": "Nusrat Jahan",
+      "dailyRate": 35,
+      "deposit": 400,
+      "condition": "Very Good - Minor edge wear",
+      "conditionScore": 88,
+      "fingerprint": "hash-hunger-games-001",
+      "available": false
+    },
+    {
+      "id": "13",
+      "title": "The Girl with the Dragon Tattoo",
+      "author": "Stieg Larsson",
+      "edition": "Norstedts Förlag, 2005",
+      "publisher": "Norstedts Förlag",
+      "isbn": "9780307473479",
+      "description": "A gripping mystery featuring journalist Mikael Blomkvist and hacker Lisbeth Salander.",
+      "images": [
+        "https://i.etsystatic.com/56376480/r/il/ef03c8/6917942368/il_300x300.6917942368_hq85.jpg"
+      ],
+      "ownerId": "user1",
+      "ownerName": "Aminul Islam",
+      "dailyRate": 28,
+      "deposit": 320,
+      "condition": "Good - Some page yellowing",
+      "conditionScore": 78,
+      "fingerprint": "hash-dragon-tattoo-001",
+      "available": true
+    },
+    {
+      "id": "14",
+      "title": "The Fault in Our Stars",
+      "author": "John Green",
+      "edition": "Dutton Books, 2012",
+      "publisher": "Dutton Books",
+      "isbn": "9780525478812",
+      "description": "A heart-wrenching story about two teenagers with cancer who fall in love.",
+      "images": [
+        "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjHzGC27ASnn2jxBIv1ayMjdvCciUuidf6PpJlIRfIdWuKOSQFMz5fajGV5H1ChoqqijVct_Jv4ea1nMmRB97SNU83zNI3_f2-R_Pjw6raVlOvSKlW06w_8W4FGFusnkPhrTVDAAiYoKjNCle1YXjw55PwhQ-a9J0jkwO8PizrleIDnLHmgDH1_vKxy/s2048/bookpic2.jpg"
+      ],
+      "ownerId": "user2",
+      "ownerName": "Fatima Rahman",
+      "dailyRate": 25,
+      "deposit": 300,
+      "condition": "Excellent - Like new",
+      "conditionScore": 95,
+      "fingerprint": "hash-fault-in-stars-001",
+      "available": true
+    },
+    {
+      "id": "15",
+      "title": "Gone Girl",
+      "author": "Gillian Flynn",
+      "edition": "Crown Publishing Group, 2012",
+      "publisher": "Crown Publishing Group",
+      "isbn": "9780307588371",
+      "description": "A psychological thriller about a marriage gone terribly wrong.",
+      "images": [
+        "https://www.samanthakilford.com/wp-content/uploads/2015/03/gone-girl.jpg"
+      ],
+      "ownerId": "user3",
+      "ownerName": "Nusrat Jahan",
+      "dailyRate": 30,
+      "deposit": 350,
+      "condition": "Very Good - Minor spine crease",
+      "conditionScore": 86,
+      "fingerprint": "hash-gone-girl-001",
+      "available": false
+    },
+    {
+      "id": "16",
+      "title": "পথের দাবী",
+      "author": "তারাশঙ্কর বন্দ্যোপাধ্যায়",
+      "edition": "আনন্দ পাবলিশার্স, ২০১৮",
+      "publisher": "আনন্দ পাবলিশার্স",
+      "isbn": "9788177560831",
+      "description": "পথের দাবা তারাশঙ্কর বন্দ্যোপাধ্যায়ের একটি বিখ্যাত উপন্যাস। এটি একজন তরুণের জীবন সংগ্রামের কাহিনি বর্ণনা করে।",
+      "images": [
+        "https://boierduniya.com/wp-content/uploads/2020/02/iotgj.jpg"
+      ],
+      "ownerId": "user1",
+      "ownerName": "আমিনুল ইসলাম",
+      "dailyRate": 25,
+      "deposit": 300,
+      "condition": "ভালো - সামান্য ক্ষয়ক্ষতি",
+      "conditionScore": 80,
+      "fingerprint": "hash-pather-dabi-001",
+      "available": true
+    },
+    {
+      "id": "17",
+      "title": "নিষ্কৃতি",
+      "author": "শরৎচন্দ্র চট্টোপাধ্যায়",
+      "edition": "দে'জ পাবলিশিং, ২০১৯",
+      "publisher": "দে'জ পাবলিশিং",
+      "isbn": "9789386634821",
+      "description": "সংহতি শরৎচন্দ্র চট্টোপাধ্যায়ের একটি জনপ্রিয় উপন্যাস। এটি বাঙালি সমাজের নানা দিক তুলে ধরে।",
+      "images": [
+        "https://shoily.com/wp-content/themes/patterns/timthumb.php?src=https%3A%2F%2Fshoily.com%2Fwp-content%2Fuploads%2F2016%2F01%2F17342813._UY265_SS265_.jpg&q=90&w=1150&zc=1"
+      ],
+      "ownerId": "user3",
+      "ownerName": "নুসরাত জাহান",
+      "dailyRate": 20,
+      "deposit": 250,
+      "condition": "খুব ভালো - সামান্য কালির দাগ",
+      "conditionScore": 85,
+      "fingerprint": "hash-sahitto-001",
+      "available": true
+    },
+    {
+      "id": "18",
+      "title": "গীতাঞ্জলি",
+      "author": "রবীন্দ্রনাথ ঠাকুর",
+      "edition": "বিশ্বভারতী, ২০২০",
+      "publisher": "বিশ্বভারতী",
+      "isbn": "9788173158312",
+      "description": "রবীন্দ্রনাথ ঠাকুরের বিখ্যাত কবিতা সংকলন যার জন্য তিনি নোবেল পুরস্কার পান।",
+      "images": [
+        "https://img.drz.lazcdn.com/static/bd/p/733b8f86015656e7a9f6826cb1dfc35a.jpg_720x720q80.jpg"
+      ],
+      "ownerId": "user2",
+      "ownerName": "ফাতিমা রহমান",
+      "dailyRate": 35,
+      "deposit": 400,
+      "condition": "চমৎকার - প্রচ্ছদে সামান্য ক্ষয়ক্ষতি",
+      "conditionScore": 90,
+      "fingerprint": "hash-geetanjali-001",
+      "available": false
+    },
+    {
+      "id": "19",
+      "title": "অপরাজিত",
+      "author": "বিভূতিভূষণ বন্দ্যোপাধ্যায়",
+      "edition": "অনন্যা প্রকাশনী, ২০১৫",
+      "publisher": "অনন্যা প্রকাশনী",
+      "isbn": "9789847014330",
+      "description": "অপরাজিত বিভূতিভূষণ বন্দ্যোপাধ্যায়ের লেখা একটি উপন্যাস, যা অপুর শৈশব পরবর্তী জীবন, তার উত্থান-পতন এবং নাটকীয় ঘটনাবলী নিয়ে গঠিত।",
+      "images": [
+        "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1358780133i/583569.jpg"
+      ],
+      "ownerId": "user1",
+      "ownerName": "আমিনুল ইসলাম",
+      "dailyRate": 22,
+      "deposit": 280,
+      "condition": "ভালো - পাতায় সামান্য হলুদ হয়েছে",
+      "conditionScore": 78,
+      "fingerprint": "hash-oporajito-001",
+      "available": true
+    },
+    {
+      "id": "20",
+      "title": "আরেক ফাল্গুন",
+      "author": "জহির রায়হান",
+      "edition": "অবসর, ২০১৯",
+      "publisher": "অবসর",
+      "isbn": "9789849043859",
+      "description": "আরেক ফাল্গুন জহির রায়হানের একটি জনপ্রিয় উপন্যাস। এটি প্রেম ও বিচ্ছেদের কাহিনি।",
+      "images": [
+        "https://sg-test-11.slatic.net/other/roc/bce9745ef64afe2a43e4b1ea44281087.jpg"
+      ],
+      "ownerId": "user2",
+      "ownerName": "ফাতিমা রহমান",
+      "dailyRate": 24,
+      "deposit": 290,
+      "condition": "খুব ভালো - নতুন বই",
+      "conditionScore": 92,
+      "fingerprint": "hash-arek-falgune-001",
+      "available": true
+    },
+    {
+      "id": "21",
+      "title": "ইতিকথা ত্রয়ী",
+      "author": "মানিক বন্দ্যোপাধ্যায়",
+      "edition": "মাওলা ব্রাদার্স, ২০১৭",
+      "publisher": "মাওলা ব্রাদার্স",
+      "isbn": "9789842000022",
+      "description": "লেখকের বিচক্ষণ লেখনশৈলীতে উচ্চাভিলাষী মোহনের মাঝে পাঠকের অবচেতন মন খুঁজে নেবে শশী ডাক্তারকে। অন্যদিকে ইতিকথার পরের কথায় বিলেত ফেরত শুভর দৃষ্টিতে গ্রাম ও শহরের মিতালিই যেন চিত্রিত। নন্দ, জগদীশ, লক্ষ্মী এদের মাঝে লেখক কোথাও যেন লুকিয়ে রেখেছেন তার পূর্ববর্তী বইয়ের মনস্তত্ত্ব।...",
+      "images": [
+        "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1709281982i/60238174.jpg"
+      ],
+      "ownerId": "user3",
+      "ownerName": "নুসরাত জাহান",
+      "dailyRate": 26,
+      "deposit": 310,
+      "condition": "ভালো - সামান্য প্রচ্ছদ ক্ষয়ক্ষতি",
+      "conditionScore": 82,
+      "fingerprint": "hash-krida-001",
+      "available": false
+    },
+    {
+      "id": "22",
+      "title": "দিবারাত্রির কাব্য",
+      "author": "মানিক বন্দ্যোপাধ্যায়",
+      "edition": "নিউ এজ পাবলিশার্স, ২০২৩",
+      "publisher": "নিউ এজ পাবলিশার্স",
+      "isbn": "9789849612035",
+      "description": "মানিক বন্দ্যোপাধ্যায়ের কালজয়ী উপন্যাস 'দিবারাত্রির কাব্য' প্রথম প্রকাশিত হয় ১৯৩৫ সালে। লেখক নিজেই এটিকে 'রূপকের আরেক রূপ' বলে অভিহিত করেছেন। এটি একটি কাব্যধর্মী প্রেমের উপন্যাস যেখানে মানবিক সম্পর্কের জটিলতা ও আবেগের গভীরতা অত্যন্ত শিল্পসুষমায় ফুটে উঠেছে।",
+      "images": [
+        "https://d1jpltibqvso3j.cloudfront.net/images/product/53000/52969/250X360/52969.png"
+      ],
+      "ownerId": "user4",
+      "ownerName": "রিয়াদ হাসান",
+      "dailyRate": 28,
+      "deposit": 320,
+      "condition": "ভালো - পাতায় কিছু পেন্সিল দাগ",
+      "conditionScore": 85,
+      "fingerprint": "hash-dibaratrir-kabya-001",
+      "available": true
+    },
+    {
+      "id": "23",
+      "title": "জননীি",
+      "author": "শওকত ওসমান",
+      "edition": "সাহিত্য প্রকাশ, ২০১৬",
+      "publisher": "সাহিত্য প্রকাশ",
+      "isbn": "9789847038748",
+      "description": "জননী শওকত ওসমানের একটি বিখ্যাত উপন্যাস।",
+      "images": [
+        "https://baatighar.com/web/image/product.product/96285/image_1024"
+      ],
+      "ownerId": "user2",
+      "ownerName": "ফাতিমা রহমান",
+      "dailyRate": 25,
+      "deposit": 320,
+      "condition": "ভালো - পাতায় সামান্য কালির দাগ",
+      "conditionScore": 80,
+      "fingerprint": "hash-jibon-ar-jibon-001",
+      "available": true
+    },
+    {
+      "id": "24",
+      "title": "হিমু",
+      "author": "হুমায়ূন আহমেদ",
+      "edition": "অনন্যা প্রকাশনী, ২০১২",
+      "publisher": "অনন্যা প্রকাশনী",
+      "isbn": "9789847023835",
+      "description": "হিমু হুমায়ূন আহমেদর একটি বিখ্যাত উপন্যাস। এটি একজন অসহায় মানুষের জীবন সংগ্রামের কাহিনি।",
+      "images": [
+        "https://www.upoharbd.com/images/uploads/Books/Humayun%20Ahmed/book128.jpg"
+      ],
+      "ownerId": "user3",
+      "ownerName": "নুসরাত জাহান",
+      "dailyRate": 27,
+      "deposit": 330,
+      "condition": "খুব ভালো - সামান্য প্রচ্ছদ ক্ষয়ক্ষতি",
+      "conditionScore": 88,
+      "fingerprint": "hash-himu-001",
+      "available": false
+    },
+    {
+      "id": "25",
+      "title": "লালসালু",
+      "author": "সৈয়দ ওয়ালীউল্লাহ",
+      "edition": "বাংলা একাডেমি, ২০১৪",
+      "publisher": "বাংলা একাডেমি",
+      "isbn": "9789849138433",
+      "description": "লালসালু সৈয়দ মুজতবা আলীর একটি বিখ্যাত উপন্যাস। এটি একজন নারীর জীবন ও সংগ্রামের কাহিনি।",
+      "images": [
+        "https://d1jpltibqvso3j.cloudfront.net/images/product/113000/112965/250X360/112965.png"
+      ],
+      "ownerId": "user1",
+      "ownerName": "আমিনুল ইসলাম",
+      "dailyRate": 28,
+      "deposit": 340,
+      "condition": "ভালো - পাতায় সামান্য হলুদ হয়েছে",
+      "conditionScore": 76,
+      "fingerprint": "hash-lalsalu-001",
+      "available": true
+    },
+    {
+      "id": "26",
+      "title": "পথের পাঁচালী",
+      "author": "বিভূতিভূষণ বন্দ্যোপাধ্যায়",
+      "edition": "মিত্র ও ঘোষ, ২০১৫",
+      "publisher": "মিত্র ও ঘোষ",
+      "isbn": "9789384030360",
+      "description": "বিদায় বিভূতিভূষণ বন্দ্যোপাধ্যায়ের একটি বিখ্যাত উপন্যাস। এটি একজন বিধবার জীবন ও সংগ্রামের কাহিনি।",
+      "images": [
+        "https://rokbucket.rokomari.io/ProductNew20190903/260X372/Pother_Pachali-Bivutivushon_Bondopadhai-c59af-218362.jpg"
+      ],
+      "ownerId": "user2",
+      "ownerName": "ফাতিমা রহমান",
+      "dailyRate": 26,
+      "deposit": 310,
+      "condition": "খুব ভালো - নতুন বই",
+      "conditionScore": 93,
+      "fingerprint": "hash-biday-001",
+      "available": true
+    },
+    {
+      "id": "27",
+      "title": "অগ্নিবীণা",
+      "author": "কাজী নজরুল ইসলাম",
+      "edition": "দে'জ পাবলিশিং, ২০১৮",
+      "publisher": "দে'জ পাবলিশিং",
+      "isbn": "9789386634838",
+      "description": "অগ্নিবীণা শরৎচন্দ্র চট্টোপাধ্যায়ের একটি বিখ্যাত উপন্যাস। এটি একজন নারীর জীবন ও সংগ্রামের কাহিনি।",
+      "images": [
+        "https://assets.mamunbooks.com/public/frontend/thumbnail/65c22ca71261b.jpg"
+      ],
+      "ownerId": "user3",
+      "ownerName": "নুসরাত জাহান",
+      "dailyRate": 24,
+      "deposit": 290,
+      "condition": "ভালো - পাতায় সামান্য কালির দাগ",
+      "conditionScore": 81,
+      "fingerprint": "hash-ognobina-001",
+      "available": false
+    },
+    {
+      "id": "28",
+      "title": "বিন্দুর ছেলে",
+      "author": "শরৎচন্দ্র চট্টোপাধ্যায়",
+      "edition": "দে'জ পাবলিশিং, ২০১৭",
+      "publisher": "দে'জ পাবলিশিং",
+      "isbn": "9789386634845",
+      "description": "বাঙালির জীবনের আনন্দ-বেদনাকে সাবলীল স্বচ্ছন্দ ভাষায় যে কথাশিল্পী পরম সহানুভূতি ভরে তুলে ধরেছেন বাংলা সাহিত্যে, তিনি শরৎচন্দ্র চট্টোপাধ্যায়।",
+      "images": [
+        "https://rokbucket.rokomari.io/ProductNew20190903/260X372/rokimg_20151213_16393.gif"
+      ],
+      "ownerId": "user1",
+      "ownerName": "আমিনুল ইসলাম",
+      "dailyRate": 25,
+      "deposit": 300,
+      "condition": "খুব ভালো - নতুন বই",
+      "conditionScore": 95,
+      "fingerprint": "hash-choto-bondi-001",
+      "available": true
+    },
+    {
+      "id": "29",
+      "title": "দত্তা",
+      "author": "শরৎচন্দ্র চট্টোপাধ্যায়",
+      "edition": "দে'জ পাবলिशিং, ২০১৬",
+      "publisher": "দে'জ পাবলিশিং",
+      "isbn": "9789386634852",
+      "description": "দত্তা শরৎচন্দ্র চট্টোপাধ্যায়ের একটি বিখ্যাত উপন্যাস। এটি একজন নারীর জীবন ও সংগ্রামের কাহিনি।",
+      "images": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaxFufS3-0at2M_H6nHm2dHidiuLW1GSn6L8-p21hCAGcZAd4mHVNpo-n8479vGtDzkls&usqp=CAU"
+      ],
+      "ownerId": "user2",
+      "ownerName": "ফাতিমা রহমান",
+      "dailyRate": 23,
+      "deposit": 280,
+      "condition": "ভালো - পাতায় সামান্য হলুদ হয়েছে",
+      "conditionScore": 77,
+      "fingerprint": "hash-datta-001",
+      "available": true
+    },
+    {
+      "id": "30",
+      "title": "দেবদাস",
+      "author": "শরৎচন্দ্র চট্টোপাধ্যায়",
+      "edition": "দে'জ পাবলিশিং, ২০১৯",
+      "publisher": "দে'জ পাবলিশিং",
+      "isbn": "9789386634869",
+      "description": "দেবদাসী শরৎচন্দ্র চট্টোপাধ্যায়ের একটি বিখ্যাত উপন্যাস। এটি একজন নারীর জীবন ও সংগ্রামের কাহিনি।",
+      "images": [
+        "https://rokbucket.rokomari.io/ProductNew20190903/260X372/Devdas-Saratchandra_Chattopadhyay-e3cdd-262813.png"
+      ],
+      "ownerId": "user3",
+      "ownerName": "নুসরাত জাহান",
+      "dailyRate": 26,
+      "deposit": 310,
+      "condition": "খুব ভালো - সামান্য প্রচ্ছদ ক্ষয়ক্ষতি",
+      "conditionScore": 89,
+      "fingerprint": "hash-debodasi-001",
+      "available": false
+    },
+    {
+      "id": "31",
+      "title": "অচেনা",
+      "author": "সৈয়দ শামসুল হক",
+      "edition": "বাংলা একাডেমি, ২০১৫",
+      "publisher": "বাংলা একাডেমি",
+      "isbn": "9789849138426",
+      "description": "অচেনা সৈয়দ শামসুল হকের একটি বিখ্যাত উপন্যাস।",
+      "images": [
+        "https://boierduniya.com/wp-content/uploads/2020/05/ochena.jpg"
+      ],
+      "ownerId": "user1",
+      "ownerName": "আমিনুল ইসলাম",
+      "dailyRate": 27,
+      "deposit": 330,
+      "condition": "ভালো - পাতায় সামান্য কালির দাগ",
+      "conditionScore": 83,
+      "fingerprint": "hash-sei-achinta-001",
+      "available": true
+    },
+    {
+      "id": "32",
+      "title": "রাজবন্দীর জবানবন্দী",
+      "author": "কাজী নজরুল ইসলাম",
+      "edition": "বাংলা একাডেমি, ২০১৪",
+      "publisher": "বাংলা একাডেমি",
+      "isbn": "9789849138419",
+      "description": "রাজবন্দীর জবানবন্দী কাজী নজরুল ইসলামের একটি বিখ্যাত উপন্যাস। ১৯২৩ সালের ৭ ই জানুয়ারি কলকাতার প্রেসিডেন্সি জেলে বসে তিনি রচনা করেন।",
+      "images": [
+        "https://rokbucket.rokomari.io/ProductNew20190903/260X372/5a96a4e60_14780.jpg"
+      ],
+      "ownerId": "user2",
+      "ownerName": "ফাতিমা রহমান",
+      "dailyRate": 29,
+      "deposit": 350,
+      "condition": "খুব ভালো - নতুন বই",
+      "conditionScore": 94,
+      "fingerprint": "hash-muslim-meye-001",
+      "available": true
+    },
+    {
+      "id": "33",
+      "title": "পরিণীতা",
+      "author": "শরৎচন্দ্র চট্টোপাধ্যায়",
+      "edition": "দে'জ পাবলিশিং, ২০১৮",
+      "publisher": "দে'জ পাবলিশিং",
+      "isbn": "9789386634876",
+      "description": "শরৎচন্দ্র চট্টোপাধ্যায়ের \"পরিণীতা\" একটি রোমান্টিক উপন্যাস। ১৯১৪ সালে উপন্যাসটি রচিত হয়।",
+      "images": [
+        "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1560833781l/49470376.jpg"
+      ],
+      "ownerId": "user3",
+      "ownerName": "নুসরাত জাহান",
+      "dailyRate": 24,
+      "deposit": 290,
+      "condition": "ভালো - পাতায় সামান্য হলুদ হয়েছে",
+      "conditionScore": 79,
+      "fingerprint": "hash-beder-dan-001",
+      "available": false
+    },
+    {
+      "id": "34",
+      "title": "তিমিরান্তিক",
+      "author": "সিকান্‌দার আবু জাফর",
+      "edition": "বাংলা একাডেমি, ২০১৬",
+      "publisher": "বাংলা একাডেমি",
+      "isbn": "9789849138440",
+      "description": "'তিমিরান্তিক': এটি সিকান্দার আবু জাফর-এর অন্যতম বিখ্যাত এবং প্রকাশিত কাব্যগ্রন্থগুলোর মধ্যে একটি।",
+      "images": [
+        "https://rokbucket.rokomari.io/ProductNew20190903/260X372/395bec739_187581.jpg"
+      ],
+      "ownerId": "user1",
+      "ownerName": "আমিনুল ইসলাম",
+      "dailyRate": 25,
+      "deposit": 300,
+      "condition": "খুব ভালো - নতুন বই",
+      "conditionScore": 91,
+      "fingerprint": "hash-surjodiptir-dine-001",
+      "available": true
+    },
+    {
+      "id": "35",
+      "title": "কবিতাসমগ্র",
+      "author": "সিকান্‌দার আবু জাফর",
+      "edition": "বাংলা একাডেমি, ২০১৫",
+      "publisher": "বাংলা একাডেমি",
+      "isbn": "9789849138457",
+      "description": "কবিতাসমগ্র সিকান্দার আবু জাফরের একটি বিখ্যাত কবিতা সংকলন।",
+      "images": [
+        "https://rokbucket.rokomari.io/ProductNew20190903/260X372/e3f03946c_154506.jpg"
+      ],
+      "ownerId": "user2",
+      "ownerName": "ফাতিমা রহমান",
+      "dailyRate": 26,
+      "deposit": 310,
+      "condition": "ভালো - পাতায় সামান্য কালির দাগ",
+      "conditionScore": 84,
+      "fingerprint": "hash-prothom-protishruti-001",
+      "available": true
+    },
+    {
+      "id": "36",
+      "title": "আল কুরআনুল কারীম (বাংলা অনুবাদ ও সংক্ষিপ্ত তাফসীর সহ)",
+      "author": "ড. আবু বকর মুহাম্মাদ যাকারিয়া",
+      "edition": "প্রথম সংস্করণ, ২০২৩",
+      "publisher": "কালার লাইন পাবলিকেশন্স",
+      "isbn": "9789849711401",
+      "description": "পূর্ণ কুরআন শরীফের বাংলা অনুবাদ ও সংক্ষিপ্ত তাফসীর সংবলিত বই। সহজ সরল ভাষায় অনুবাদ ও ব্যাখ্যা প্রদান করা হয়েছে।",
+      "images": [
+        "https://eboighar-static.s3.ap-southeast-1.amazonaws.com/static/Books/book_66382023-02-28_1677595914.jpg"
+      ],
+      "ownerId": "user1",
+      "ownerName": "আমিনুল ইসলাম",
+      "dailyRate": 40,
+      "deposit": 450,
+      "condition": "খুব ভালো - নতুন বই",
+      "conditionScore": 96,
+      "fingerprint": "hash-quran-bangla-001",
+      "available": true
+    },
+    {
+      "id": "37",
+      "title": "তাফসীর ইবনে কাসীর (১-১২ খণ্ড)",
+      "author": "ইমাম ইবনে কাসীর",
+      "edition": "সংশোধিত সংস্করণ, ২০২২",
+      "publisher": "ইসলামিক ফাউন্ডেশন বাংলাদেশ",
+      "isbn": "9789840691780",
+      "description": "বিখ্যাত তাফসীর গ্রন্থের বাংলা অনুবাদ। সম্পূর্ণ ১২ খণ্ডে কুরআনের পূর্ণাঙ্গ ব্যাখ্যা সংবলিত এই বইটি ইসলামিক স্টাডিজের জন্য অপরিহার্য।",
+      "images": [
+        "https://pbs.com.bd/_next/image?url=https%3A%2F%2Ffs.pbs.com.bd%2FDIR%2FCom%2FPBS%2FProduct%2FImageDetails%2F2301523.jpg&w=640&q=75"
+      ],
+      "ownerId": "user2",
+      "ownerName": "ফাতিমা রহমান",
+      "dailyRate": 40,
+      "deposit": 450,
+      "condition": "খুব ভালো - নতুন বই",
+      "conditionScore": 97,
+      "fingerprint": "hash-tafsir-ibn-kathir-001",
+      "available": true
+    },
+    {
+      "id": "38",
+      "title": "নূরানি শিক্ষা (কুরআন শিক্ষার প্রাথমিক বই)",
+      "author": "মুহাম্মদ আসলাম",
+      "edition": "দশম সংস্করণ, ২০২১",
+      "publisher": "আল-কুরআন একাডেমী",
+      "isbn": "9789848005265",
+      "description": "কুরআন শিক্ষার জন্য প্রাথমিক স্তরের বই। আরবি হরফ ও উচ্চারণ শিক্ষার সহজ পদ্ধতিতে রচিত এই বইটি শিশু ও বড় সবার জন্য উপযোগী।",
+      "images": [
+        "https://media.kitabghor.com/products/448/4173/gvh2u17266513434o2hk8g.jpg"
+      ],
+      "ownerId": "user3",
+      "ownerName": "নুসরাত জাহান",
+      "dailyRate": 40,
+      "deposit": 450,
+      "condition": "খুব ভালো - নতুন বই",
+      "conditionScore": 98,
+      "fingerprint": "hash-noorani-shikkha-001",
+      "available": false
+    },
+    {
+      "id": "39",
+      "title": "কুরআনের গল্প (১-৩ খণ্ড)",
+      "author": "মাওলানা ওয়াহিদুদ্দিন খান",
+      "edition": "পঞ্চম সংস্করণ, ২০২০",
+      "publisher": "গার্ডিয়ান পাবলিকেশন্স",
+      "isbn": "9789849178702",
+      "description": "কুরআনে বর্ণিত বিভিন্ন নবী-রাসূল ও ঐতিহাসিক ঘটনাবলীর গল্প সংকলন। শিশু-কিশোর ও সাধারণ পাঠকদের জন্য উপযোগী করে রচিত।",
+      "images": [
+        "https://wafilife-media.wafilife.com/uploads/2022/01/Quraner-Golpo-02.png"
+      ],
+      "ownerId": "user1",
+      "ownerName": "আমিনুল ইসলাম",
+      "dailyRate": 40,
+      "deposit": 450,
+      "condition": "খুব ভালো - নতুন বই",
+      "conditionScore": 95,
+      "fingerprint": "hash-quraner-golpo-001",
+      "available": true
+    },
+    {
+      "id": "40",
+      "title": "কুরআন সুন্নাহর আলোকে নামাজ",
+      "author": "ড. খন্দকার আব্দুল্লাহ জাহাঙ্গীর",
+      "edition": "তৃতীয় সংস্করণ, ২০১৯",
+      "publisher": "আস-সunnah পাবলিকেশন্স",
+      "isbn": "9789849051753",
+      "description": "কুরআন ও হাদিসের আলোকে নামাজের পূর্ণাঙ্গ গাইডবুক। নামাজের সকল বিধি-বিধান, ফরজ, ওয়াজিব, সুন্নাত ও নফল সম্পর্কে বিশদ ব্যাখ্যা।",
+      "images": [
+        "https://wafilife-media.wafilife.com/uploads/2017/09/%E0%A6%95%E0%A7%8B%E0%A6%B0%E0%A6%86%E0%A6%A8-%E0%A6%B9%E0%A6%BE%E0%A6%A6%E0%A7%80%E0%A6%B8%E0%A7%87%E0%A6%B0-%E0%A6%86%E0%A6%B2%E0%A7%8B%E0%A6%95%E0%A7%87-%E0%A6%A8%E0%A6%BE%E0%A6%AE%E0%A6%BE%E0%A6%9C.png"
+      ],
+      "ownerId": "user2",
+      "ownerName": "ফাতিমা রহমান",
+      "dailyRate": 40,
+      "deposit": 450,
+      "condition": "খুব ভালো - নতুন বই",
+      "conditionScore": 96,
+      "fingerprint": "hash-namaz-guide-001",
+      "available": false
     }
   ]
 }

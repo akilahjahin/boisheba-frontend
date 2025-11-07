@@ -1,16 +1,23 @@
+// src/mocks/handlers.ts
 import { http, HttpResponse } from 'msw';
 import seedData from './seed.json';
 
 const API_BASE = '/api';
 
+// Helper function to safely get array data
+const getSafeArray = (data: any) => {
+  return Array.isArray(data) ? data : [];
+};
+
 // In-memory data store (mutates during session)
 let books = [...seedData.books];
-let users = [...seedData.users];
-let transactions = [...seedData.transactions];
+let users = getSafeArray(seedData.users);
+let transactions = getSafeArray(seedData.transactions);
 
 // Mock current user (set after login)
 let currentUser: typeof users[0] | null = users[0]; // Default logged in as user1
 
+// Export handlers as an array of RequestHandler
 export const handlers = [
   // GET /books - List all books with optional search
   http.get(`${API_BASE}/books`, ({ request }) => {
@@ -32,9 +39,7 @@ export const handlers = [
   // GET /books/:id - Get single book
   http.get(`${API_BASE}/books/:id`, ({ params }) => {
     const book = books.find((b) => b.id === params.id);
-    if (!book) {
-      return new HttpResponse(null, { status: 404 });
-    }
+    if (!book) return new HttpResponse(null, { status: 404 });
     return HttpResponse.json(book);
   }),
 
@@ -68,11 +73,8 @@ export const handlers = [
   // POST /books/:id/compare - Compare book condition
   http.post(`${API_BASE}/books/:id/compare`, async ({ params }) => {
     const book = books.find((b) => b.id === params.id);
-    if (!book) {
-      return new HttpResponse(null, { status: 404 });
-    }
+    if (!book) return new HttpResponse(null, { status: 404 });
 
-    // Mock comparison result (in production, use AI/image processing)
     const similarity = Math.floor(Math.random() * 20) + 75; // 75-95%
     const differences = similarity < 85
       ? ['Minor edge wear detected', 'Slight color fading on spine']
@@ -118,6 +120,9 @@ export const handlers = [
       email: body.email,
       reputation: 5.0,
       avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${body.name}`,
+      isActive: true,
+      booksShared: 0,
+      isAdmin: false,
     };
 
     users.push(newUser);
@@ -129,7 +134,55 @@ export const handlers = [
     }, { status: 201 });
   }),
 
-  // POST /transactions - Create borrow request
+  // GET /admin/users - Get all users (admin only)
+  http.get(`${API_BASE}/admin/users`, () => {
+    const enrichedUsers = users.map(user => ({
+      ...user,
+      isActive: user.isActive !== false,
+      booksShared: user.booksShared ?? Math.floor(Math.random() * 10) + 1,
+    }));
+
+    return HttpResponse.json(enrichedUsers);
+  }),
+
+  // PATCH /admin/users/:id - Update user status (admin only)
+  http.patch(`${API_BASE}/admin/users/:id`, async ({ params, request }) => {
+    const userId = params.id;
+    const body = await request.json() as any;
+
+    const userIndex = users.findIndex(u => u.id === userId);
+    if (userIndex === -1) return new HttpResponse(null, { status: 404 });
+
+    users[userIndex] = { ...users[userIndex], ...body };
+
+    return HttpResponse.json(users[userIndex]);
+  }),
+
+  // GET /admin/transactions - Get all transactions (admin only)
+  http.get(`${API_BASE}/admin/transactions`, () => {
+    const enrichedTransactions = transactions.map(tx => ({
+      ...tx,
+      bookId: tx.bookId,
+      borrowerId: tx.borrowerId,
+    }));
+
+    return HttpResponse.json(enrichedTransactions);
+  }),
+
+  // PATCH /admin/transactions/:id - Update transaction status (admin only)
+  http.patch(`${API_BASE}/admin/transactions/:id`, async ({ params, request }) => {
+    const transactionId = params.id;
+    const body = await request.json() as any;
+
+    const transactionIndex = transactions.findIndex(t => t.id === transactionId);
+    if (transactionIndex === -1) return new HttpResponse(null, { status: 404 });
+
+    transactions[transactionIndex] = { ...transactions[transactionIndex], ...body };
+
+    return HttpResponse.json(transactions[transactionIndex]);
+  }),
+
+  // POST /transactions - Create borrow request (updated)
   http.post(`${API_BASE}/transactions`, async ({ request }) => {
     const body = await request.json() as any;
 
@@ -145,6 +198,7 @@ export const handlers = [
       id: `tx-${Date.now()}`,
       bookId: body.bookId,
       borrowerId: currentUser?.id || 'user1',
+      lenderId: book.ownerId,
       startDate: body.startDate,
       endDate: body.endDate,
       status: 'pending' as const,
@@ -173,7 +227,6 @@ export const handlers = [
 
   // GET /recommendations - Get book recommendations
   http.get(`${API_BASE}/recommendations`, () => {
-    // Mock: return 3 random available books
     const available = books.filter((b) => b.available);
     const shuffled = [...available].sort(() => 0.5 - Math.random());
     return HttpResponse.json(shuffled.slice(0, 3));

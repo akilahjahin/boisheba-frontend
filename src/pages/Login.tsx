@@ -5,9 +5,13 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { BookOpen } from "lucide-react";
 
-const Login = () => {
+interface LoginProps {
+  setIsLoggedIn: (value: boolean) => void;
+  setIsAdmin?: (value: boolean) => void;
+}
+
+const Login = ({ setIsLoggedIn, setIsAdmin }: LoginProps) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +24,16 @@ const Login = () => {
     // TODO: Replace with actual API call
     setTimeout(() => {
       if (email && password) {
-        toast.success("Welcome back!");
+        // Check if admin credentials
+        if (email === "admin@example.com" && password === "admin123") {
+          setIsAdmin?.(true);
+          toast.success("Welcome back, Admin!");
+        } else {
+          setIsAdmin?.(false);
+          toast.success("Welcome back!");
+        }
+
+        setIsLoggedIn(true);
         navigate("/dashboard");
       } else {
         toast.error("Please fill in all fields");
@@ -33,7 +46,13 @@ const Login = () => {
     <div className="min-h-screen bg-gradient-hero flex items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-4 text-center">
-          <BookOpen className="w-12 h-12 mx-auto text-primary" />
+          <div className="flex justify-center">
+            <img
+              src="/boisheba.png"
+              alt="BoisSheba Logo"
+              className="w-12 h-12"
+            />
+          </div>
           <CardTitle className="text-2xl">Welcome Back</CardTitle>
           <CardDescription>Sign in to your BoiSheba account</CardDescription>
         </CardHeader>
@@ -70,6 +89,9 @@ const Login = () => {
             <Link to="/signup" className="text-primary hover:underline">
               Sign up
             </Link>
+          </div>
+          <div className="mt-2 text-center text-xs text-muted-foreground">
+            Admin: admin@example.com / admin123
           </div>
         </CardContent>
       </Card>

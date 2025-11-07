@@ -36,24 +36,47 @@ src/
 │   ├── Dashboard.tsx
 │   ├── AddBook.tsx  # Book upload with OCR
 │   ├── Books.tsx    # Browse books
-│   └── BookDetail.tsx
+│   ├── BookDetail.tsx
+│   └── Admin.tsx    # Admin dashboard
 ├── components/      # Reusable UI components
+│   ├── ui/         # shadcn/ui components
+│   ├── Header.tsx   # Navigation header
+│   ├── NavLink.tsx  # Navigation links
+│   ├── BookCard.tsx  # Book display card
+│   ├── BorrowModal.tsx  # Borrow book modal
+│   ├── CompareCanvas.tsx  # Image comparison
+│   └── UploadImage.tsx  # Image upload
 ├── lib/            # Utilities
-└── index.css       # Design system tokens
+│   ├── i18n.ts      # Internationalization
+│   ├── tesseract.ts  # OCR processing
+│   └── utils.ts      # API utilities
+├── mocks/          # Mock API
+│   ├── browser.ts    # MSW browser setup
+│   ├── handlers.ts   # Mock API handlers
+│   └── seed.json    # Mock data
+└── public/          # Static assets
+    ├── boisheba.png  # BoiSheba logo
+    ├── img_1.jpg..img_6.jpg  # Hero carousel images
+    ├── mockServiceWorker.js  # MSW worker
+    └── favicon.ico
 ```
 
 ## 🎨 Features
 
 ### Implemented (Demo-Ready)
-- ✅ Landing page with hero section
-- ✅ User authentication (mocked)
-- ✅ Book upload with image preview
-- ✅ Book listing with search
-- ✅ Book detail page with AI condition score
-- ✅ Borrow flow with date selection
-- ✅ User dashboard with stats
-- ✅ Responsive, mobile-first design
-- ✅ Design system with Tailwind tokens
+- ✅ **Landing Page**: Hero section with sliding images and feature highlights
+- ✅ **User Authentication**: Login/signup flows with proper state management
+- ✅ **Book Management**: Add books with image upload and OCR processing
+- ✅ **Book Discovery**: Browse books with search and filtering
+- ✅ **Book Details**: View complete book information with condition scoring
+- ✅ **Borrowing System**: Date selection, deposit calculation, transaction creation
+- ✅ **User Dashboard**: Personal stats, book management, recommendations
+- ✅ **Admin Dashboard**: User management, book approval, transaction oversight
+- ✅ **Image Comparison**: Before/after upload with visual diff results
+- ✅ **Responsive Design**: Mobile-first with proper breakpoints
+- ✅ **Component Library**: Complete shadcn/ui integration
+- ✅ **TypeScript**: Full type safety throughout
+- ✅ **Mock API**: MSW with all required endpoints
 
 ### TODO (Backend Integration Required)
 - [ ] Real OCR with Tesseract.js or backend API
@@ -61,88 +84,12 @@ src/
 - [ ] Payment processing
 - [ ] Real-time notifications
 - [ ] Bengali language support (i18n)
-- [ ] Admin panel
 - [ ] Advanced search & recommendations
-
-## 🔌 Backend Integration
-
-### Mock API Setup (Coming Soon)
-The frontend is designed to work with a separate Spring Boot backend. Mock endpoints are currently simulated with `setTimeout` for the hackathon demo.
-
-### API Contract (Expected Endpoints)
-
-```yaml
-# OpenAPI 3.0 specification coming soon
-POST /api/auth/signup
-POST /api/auth/login
-POST /api/books - Create book
-GET /api/books - List books
-GET /api/books/:id - Get book details
-POST /api/books/ocr - OCR image processing
-POST /api/borrow - Create borrow request
-GET /api/users/me - Get current user
-```
-
-### Switching to Real Backend
-
-1. Create `.env.local`:
-```env
-VITE_API_BASE_URL=http://your-backend-url:8080/api
-```
-
-2. Update fetch calls in components to use `import.meta.env.VITE_API_BASE_URL`
-
-## 🧪 Testing & Demo
-
-### Demo Script
-1. Visit landing page → Click "Get Started"
-2. Sign up with mock credentials
-3. Navigate to "Add Book" → Upload book image
-4. Watch OCR extract metadata (simulated)
-5. Browse books → Select a book
-6. Choose borrow dates → See deposit calculation
-7. View dashboard with stats
-
-### Recording Phase 2 Video
-- Use screen recording tool (OBS, Loom, etc.)
-- Follow demo script above
-- Highlight AI features (OCR, condition scoring)
-- Show responsive design on mobile viewport
-
-## 🚢 Deployment
-
-### Vercel (Recommended)
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel --prod
-```
-
-### Manual Build
-```bash
-npm run build
-# Serve dist/ folder with any static host
-```
-
-### GitHub Actions (CI/CD)
-Coming soon - automated testing and deployment
-
-## 🎯 Hackathon Deliverables
-
-- [x] Complete frontend repository
-- [x] Responsive UI with Tailwind
-- [x] Mock authentication flow
-- [x] Book upload with OCR placeholder
-- [x] Borrow flow with escrow placeholder
-- [ ] Mock API server (JSON Server or MSW)
-- [ ] API documentation (OpenAPI spec)
-- [ ] Deployment instructions
-- [ ] Demo video script
+- [ ] End-to-end tests (Cypress/Playwright)
 
 ## 🛠 Tech Stack
 
+### Frontend
 - **Framework**: React 18 + TypeScript
 - **Build Tool**: Vite
 - **Styling**: Tailwind CSS
@@ -151,14 +98,93 @@ Coming soon - automated testing and deployment
 - **Forms**: React Hook Form + Zod (coming soon)
 - **State**: React Query / Zustand (coming soon)
 - **OCR**: Tesseract.js (client-side, coming soon)
-- **Deployment**: Vercel
 
-## 📝 Notes
+### Backend (Mock)
+- **API**: Mock Service Worker (MSW)
+- **Data**: JSON seed with 40 books including Bengali titles
 
-- **Backend**: This is frontend-only. Backend APIs are mocked for demo.
-- **AI Features**: OCR and condition detection are simulated but have clear integration points.
-- **i18n**: Bengali support structure is planned but not yet implemented.
-- **Testing**: Cypress/Playwright tests coming soon.
+## 📊 Mock Data
+
+The application includes a comprehensive mock dataset with:
+- 40 books (including 20 Bengali titles)
+- 4 users (including admin)
+- 3 transactions
+- Complete user profiles and book metadata
+
+## 🔌 API
+
+### Mock Endpoints
+All frontend functionality is supported by mock API endpoints:
+
+```javascript
+// Authentication
+POST /api/auth/login
+POST /api/auth/signup
+
+// Books
+GET /api/books
+GET /api/books/:id
+POST /api/books
+POST /api/books/:id/compare
+
+// Transactions
+POST /api/borrow
+GET /api/transactions/my
+
+// Admin
+GET /api/admin/users
+PATCH /api/admin/users/:id
+GET /api/admin/transactions
+PATCH /api/admin/transactions/:id
+
+// Recommendations
+GET /api/recommendations
+```
+
+## 🧪 Testing & Demo
+
+### Demo Script
+**Step-by-Step Demo Flow:**
+1. **Landing Page** → Click "Get Started"
+2. **Sign Up** → Create account with mock credentials
+3. **Add Book** → Upload book image → Watch OCR processing (simulated)
+4. **Browse Books** → Search/filter books → Select a book
+5. **Book Details** → View book info → Check condition score
+6. **Borrow Book** → Select dates → See deposit calculation → Confirm borrow
+7. **Dashboard** → View personal stats → Manage books → See recommendations
+8. **Admin Panel** → Login as admin → Manage users → Approve transactions
+
+### Recording Phase 2 Video
+**Recommended Recording Script:**
+- **Introduction (0:30)**: Show BoiSheba logo and tagline
+- **Feature Walkthrough (1:00)**: Demonstrate key features
+  - AI-powered OCR
+  - Smart recommendations
+  - Secure lending with blockchain
+  - Bengali book collection
+- **User Flow Demo (2:00)**: Show complete user journey
+  - Registration and login
+  - Adding a book with OCR
+  - Borrowing a book
+- **Admin Demo (3:00)**: Show administrative capabilities
+  - User management
+  - Book approval workflow
+  - Transaction oversight
+- **Mobile Demo (3:30)**: Show responsive design
+  - Test on mobile viewport
+  - Demonstrate touch interactions
+- **Conclusion (4:00)**: Call to action
+  - Join the book-sharing community
+  - Visit GitHub repository
+
+## 🚢 Deployment
+
+### Development Deployment
+The project runs successfully in development mode with full mock API functionality. For production deployment, consider:
+
+- **Netlify**: Drag and drop the `dist` folder
+- **Vercel**: Connect GitHub repository for automatic deployments
+- **GitHub Pages**: Use GitHub Actions for automated deployment
 
 ## 🤝 Contributing
 
@@ -167,11 +193,14 @@ This is a hackathon project. For production use:
 2. Add comprehensive error handling
 3. Add form validation with Zod
 4. Implement real OCR with Tesseract.js
-5. Add end-to-end tests
+5. Add end-to-end tests (Cypress/Playwright)
 6. Set up proper authentication (JWT/OAuth)
+7. Implement real-time notifications
 
 ## 📄 License
 
 MIT - Solvio AI Hackathon Demo Project Frontend
 
 ---
+
+**Note**: This is a frontend-only demo with comprehensive mock APIs. All AI features (OCR, condition scoring) and blockchain integration are simulated for the hackathon demonstration.

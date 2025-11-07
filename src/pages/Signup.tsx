@@ -5,9 +5,12 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { BookOpen } from "lucide-react";
 
-const Signup = () => {
+interface SignupProps {
+  setIsLoggedIn: (value: boolean) => void;
+}
+
+const Signup = ({ setIsLoggedIn }: SignupProps) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -23,7 +26,7 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords don't match");
       return;
@@ -34,6 +37,7 @@ const Signup = () => {
     // TODO: Replace with actual API call
     setTimeout(() => {
       toast.success("Account created! Welcome to BoiSheba");
+      setIsLoggedIn(true); // Auto-login after successful signup
       navigate("/dashboard");
       setIsLoading(false);
     }, 1000);
@@ -43,7 +47,13 @@ const Signup = () => {
     <div className="min-h-screen bg-gradient-hero flex items-center justify-center px-4 py-8">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-4 text-center">
-          <BookOpen className="w-12 h-12 mx-auto text-primary" />
+          <div className="flex justify-center">
+            <img
+              src="/boisheba.png"
+              alt="BoiSheba Logo"
+              className="w-12 h-12"
+            />
+          </div>
           <CardTitle className="text-2xl">Create Your Account</CardTitle>
           <CardDescription>Join the BoiSheba community</CardDescription>
         </CardHeader>

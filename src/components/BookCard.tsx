@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Book as BookType } from '@/utils/api';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, User } from 'lucide-react';
+import { User } from 'lucide-react';
 
 interface BookCardProps {
   book: BookType;
@@ -28,7 +28,7 @@ export default function BookCard({ book }: BookCardProps) {
           </div>
         )}
       </div>
-      
+
       <CardContent className="p-4 space-y-2">
         <h3 className="font-semibold line-clamp-2 min-h-[3rem]">
           {book.title}
@@ -36,7 +36,7 @@ export default function BookCard({ book }: BookCardProps) {
         <p className="text-sm text-muted-foreground">
           by {book.author}
         </p>
-        
+
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <User className="h-3 w-3" />
           <span>{book.ownerName}</span>
@@ -55,13 +55,18 @@ export default function BookCard({ book }: BookCardProps) {
       </CardContent>
 
       <CardFooter className="p-4 pt-0">
-        <Button 
-          className="w-full" 
+        <Button
+          className="w-full"
           onClick={() => navigate(`/books/${book.id}`)}
           variant={book.available ? 'default' : 'outline'}
           disabled={!book.available}
+          aria-label={`View details for ${book.title}`}
         >
-          <BookOpen className="mr-2 h-4 w-4" />
+          <img
+            src="/boisheba.png"
+            alt="Boisheba Logo"
+            className="mr-2 h-4 w-4"
+          />
           {book.available ? 'View Details' : 'Unavailable'}
         </Button>
       </CardFooter>

@@ -1,11 +1,17 @@
+// src/utils/api.ts
+
 /**
  * API Client for BoiSheba
  *
- * TODO: For production, replace MSW mocks with real backend endpoints
- * Set VITE_API_BASE_URL in .env to point to Spring Boot backend
+ * TODO: For production, replace MSW mocks with real backend endpoints.
+ * Set VITE_API_BASE_URL in .env to point to Spring Boot backend.
  */
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "/api";
+
+// ---------------------------
+// Types
+// ---------------------------
 
 export interface Book {
   id: string;
@@ -32,6 +38,9 @@ export interface User {
   email: string;
   reputation: number;
   avatar?: string;
+  isActive?: boolean;
+  booksShared?: number;
+  isAdmin?: boolean;
 }
 
 export interface BorrowRequest {
@@ -48,33 +57,40 @@ export interface Transaction {
   borrowerId: string;
   startDate: string;
   endDate: string;
-  status: 'pending' | 'active' | 'completed' | 'cancelled';
+  status: "pending" | "active" | "completed" | "cancelled";
   totalCost: number;
   deposit: number;
 }
 
+// ---------------------------
 // Books API
+// ---------------------------
+
 export async function getBooks(query?: string): Promise<Book[]> {
-  const url = query ? `${API_BASE}/books?q=${encodeURIComponent(query)}` : `${API_BASE}/books`;
+  const url = query
+    ? `${API_BASE}/books?q=${encodeURIComponent(query)}`
+    : `${API_BASE}/books`;
+
   const response = await fetch(url);
-  if (!response.ok) throw new Error('Failed to fetch books');
+  if (!response.ok) throw new Error("Failed to fetch books");
   return response.json();
 }
 
 export async function getBookById(id: string): Promise<Book> {
   const response = await fetch(`${API_BASE}/books/${id}`);
-  if (!response.ok) throw new Error('Book not found');
+  if (!response.ok) throw new Error("Book not found");
   return response.json();
 }
 
 export async function createBook(bookData: Partial<Book>): Promise<Book> {
   // TODO: In production, send multipart/form-data with image files
   const response = await fetch(`${API_BASE}/books`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(bookData),
   });
-  if (!response.ok) throw new Error('Failed to create book');
+
+  if (!response.ok) throw new Error("Failed to create book");
   return response.json();
 }
 
@@ -84,57 +100,150 @@ export async function compareBookCondition(
 ): Promise<{ similarity: number; differences: string[] }> {
   // TODO: In production, send image to backend for AI comparison
   const response = await fetch(`${API_BASE}/books/${bookId}/compare`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ currentImage }),
   });
-  if (!response.ok) throw new Error('Comparison failed');
+
+  if (!response.ok) throw new Error("Comparison failed");
   return response.json();
 }
 
+export async function createTransaction(transactionData: {
+  bookId: string;
+  borrowerId: string;
+  lenderId?: string;
+  startDate: string;
+  endDate: string;
+  totalCost: number;
+  deposit: number;
+  status: string;
+}): Promise<Transaction> {
+  const response = await fetch(`${API_BASE}/transactions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(transactionData),
+  });
+
+  if (!response.ok) throw new Error("Failed to create transaction");
+  return response.json();
+}
+
+// ---------------------------
 // Auth API
-export async function login(email: string, password: string): Promise<{ user: User; token: string }> {
+// ---------------------------
+
+export async function login(
+  email: string,
+  password: string
+): Promise<{ user: User; token: string }> {
   const response = await fetch(`${API_BASE}/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
-  if (!response.ok) throw new Error('Login failed');
+
+  if (!response.ok) throw new Error("Login failed");
   return response.json();
 }
 
-export async function signup(name: string, email: string, password: string): Promise<{ user: User; token: string }> {
+export async function signup(
+  name: string,
+  email: string,
+  password: string
+): Promise<{ user: User; token: string }> {
   const response = await fetch(`${API_BASE}/auth/signup`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password }),
   });
-  if (!response.ok) throw new Error('Signup failed');
+
+  if (!response.ok) throw new Error("Signup failed");
   return response.json();
 }
 
+// ---------------------------
+// Admin: Users API
+// ---------------------------
+
+export async function getUsers(): Promise<User[]> {
+  const response = await fetch(`${API_BASE}/admin/users`);
+  if (!response.ok) throw new Error("Failed to fetch users");
+  return response.json();
+}
+
+export async function updateUserStatus(
+  userId: string,
+  isActive: boolean
+): Promise<User> {
+  const response = await fetch(`${API_BASE}/admin/users/${userId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ isActive }),
+  });
+
+  if (!response.ok) throw new Error("Failed to update user status");
+  return response.json();
+}
+
+// ---------------------------
 // Transactions API
-export async function createBorrowRequest(request: BorrowRequest): Promise<Transaction> {
+// ---------------------------
+
+export async function createBorrowRequest(
+  request: BorrowRequest
+): Promise<Transaction> {
   // TODO: In production, this will initiate blockchain escrow
   const response = await fetch(`${API_BASE}/transactions`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(request),
   });
-  if (!response.ok) throw new Error('Borrow request failed');
+
+  if (!response.ok) throw new Error("Borrow request failed");
   return response.json();
 }
 
 export async function getMyTransactions(): Promise<Transaction[]> {
   const response = await fetch(`${API_BASE}/transactions/my`);
-  if (!response.ok) throw new Error('Failed to fetch transactions');
+  if (!response.ok) throw new Error("Failed to fetch transactions");
   return response.json();
 }
 
+// ---------------------------
+// Admin: Transactions API
+// ---------------------------
+
+export async function getTransactions(): Promise<Transaction[]> {
+  const response = await fetch(`${API_BASE}/admin/transactions`);
+  if (!response.ok) throw new Error("Failed to fetch transactions");
+  return response.json();
+}
+
+export async function updateTransactionStatus(
+  transactionId: string,
+  status: string
+): Promise<Transaction> {
+  const response = await fetch(
+    `${API_BASE}/admin/transactions/${transactionId}`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    }
+  );
+
+  if (!response.ok) throw new Error("Failed to update transaction status");
+  return response.json();
+}
+
+// ---------------------------
 // Recommendations API
+// ---------------------------
+
 export async function getRecommendations(userId: string): Promise<Book[]> {
   // TODO: In production, backend will use ML for personalized recommendations
   const response = await fetch(`${API_BASE}/recommendations?userId=${userId}`);
-  if (!response.ok) throw new Error('Failed to fetch recommendations');
+  if (!response.ok) throw new Error("Failed to fetch recommendations");
   return response.json();
 }

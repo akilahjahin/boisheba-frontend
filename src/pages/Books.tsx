@@ -189,7 +189,7 @@ const BookCard = ({ book }: { book: any }) => {
     <Card className="overflow-hidden hover:shadow-medium transition-shadow">
       <div className="aspect-[3/4] relative overflow-hidden bg-muted">
         <img
-          src={book.images?.[0] || "/placeholder.svg"}
+          src={book.coverImageUrl || "/placeholder.svg"}
           alt={book.title}
           className="w-full h-full object-cover"
         />
@@ -228,23 +228,13 @@ const BookCard = ({ book }: { book: any }) => {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs text-muted-foreground">Condition</p>
-            <div className="flex items-center">
-              <div className="w-20 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-boisheba-600 rounded-full"
-                  style={{ width: `${book.conditionScore}%` }}
-                ></div>
-              </div>
-              <span className="text-xs ml-2 font-medium">
-                {book.conditionScore}/100
-              </span>
-            </div>
+            <p className="text-sm font-medium">{book.condition}</p>
           </div>
 
           <div className="text-right">
             <p className="text-xs text-muted-foreground">Daily Rate</p>
             <p className="text-lg font-bold text-boisheba-600">
-              ৳{book.dailyRate}
+              ৳{book.rentalPricePerDay}
             </p>
           </div>
         </div>

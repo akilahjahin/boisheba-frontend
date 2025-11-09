@@ -23,6 +23,7 @@
 
     "baseUrl": ".",
     "paths": {
+      "@/components/UploadImage": ["./src/components/UploadImage.tsx"],
       "@/*": ["./src/*"]
     }
   },

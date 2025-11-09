@@ -3,14 +3,29 @@
 /**
  * API Client for BoiSheba
  *
- * Replace MSW mocks with the real backend by setting VITE_API_BASE_URL
- * to the Spring Boot server origin (e.g. http://localhost:8081/api).
+ * Supports microservices architecture with separate User and Book services.
+ * Book Service endpoints use VITE_BOOK_SERVICE_URL (port 8082)
+ * User Service endpoints use VITE_USER_SERVICE_URL (port 8081)
  */
 
+const userServiceBase = import.meta.env.VITE_USER_SERVICE_URL as string | undefined;
+const bookServiceBase = import.meta.env.VITE_BOOK_SERVICE_URL as string | undefined;
 const envBase = import.meta.env.VITE_API_BASE_URL as string | undefined;
+
+// Default to User Service for backwards compatibility
 const API_BASE = (envBase && envBase.length > 0
   ? envBase.replace(/\/+$/, "")
   : "/api");
+
+// Book Service URL (defaults to API_BASE if not set)
+const BOOK_SERVICE_BASE = (bookServiceBase && bookServiceBase.length > 0
+  ? bookServiceBase.replace(/\/+$/, "")
+  : API_BASE);
+
+// User Service URL (defaults to API_BASE if not set)
+const USER_SERVICE_BASE = (userServiceBase && userServiceBase.length > 0
+  ? userServiceBase.replace(/\/+$/, "")
+  : API_BASE);
 
 const ACCESS_TOKEN_KEY = "boisheba.auth.accessToken";
 const TOKEN_TYPE_KEY = "boisheba.auth.tokenType";
@@ -23,6 +38,7 @@ type ApiMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "OPTIONS" | "HEAD
 interface ApiFetchOptions extends RequestInit {
   method?: ApiMethod;
   requiresAuth?: boolean;
+  serviceBase?: string; // Override service base URL
 }
 
 const isBrowser = () => typeof window !== "undefined";
@@ -31,23 +47,183 @@ const isBrowser = () => typeof window !== "undefined";
 // Types
 // ---------------------------
 
+// Book Category enum matching Spring Boot
+export enum BookCategory {
+  FICTION = "FICTION",
+  NON_FICTION = "NON_FICTION",
+  ACADEMIC = "ACADEMIC",
+  RELIGIOUS = "RELIGIOUS",
+  CHILDREN = "CHILDREN",
+  BIOGRAPHY = "BIOGRAPHY",
+  HISTORY = "HISTORY",
+  SCIENCE = "SCIENCE",
+  TECHNOLOGY = "TECHNOLOGY",
+  ARTS = "ARTS",
+  OTHER = "OTHER"
+}
+
+// Book Condition enum matching Spring Boot
+export enum BookCondition {
+  NEW = "NEW",
+  LIKE_NEW = "LIKE_NEW",
+  VERY_GOOD = "VERY_GOOD",
+  GOOD = "GOOD",
+  ACCEPTABLE = "ACCEPTABLE",
+  POOR = "POOR"
+}
+
+// Book Status enum matching Spring Boot
+export enum BookStatus {
+  PENDING_APPROVAL = "PENDING_APPROVAL",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
+  ACTIVE = "ACTIVE",
+  BORROWED = "BORROWED",
+  DELETED = "DELETED"
+}
+
+// Book interface matching Spring Boot BookResponse DTO
 export interface Book {
-  id: string;
+  id: number;
+  ownerId: number;
+  ownerName?: string;
   title: string;
   author: string;
-  edition?: string;
   publisher?: string;
+  edition?: string;
   isbn?: string;
+  category: BookCategory;
   description?: string;
-  images: string[];
-  ownerId: string;
-  ownerName: string;
-  dailyRate: number;
-  deposit: number;
-  condition: string;
-  conditionScore: number;
-  fingerprint: string;
+  condition: BookCondition;
+  language?: string;
+  totalPages?: number;
+  publicationYear?: number;
   available: boolean;
+  suggestedDeposit: number;
+  rentalPricePerDay: number;
+  coverImageUrl?: string;
+  titlePageImageUrl?: string;
+  verified?: boolean;
+  location?: string;
+  latitude?: number;
+  longitude?: number;
+  viewCount?: number;
+  borrowCount?: number;
+  averageRating?: number;
+  status: BookStatus;
+  rejectionReason?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  tags?: string[];
+  distanceKm?: number;
+}
+
+// OCR Response matching Spring Boot OcrResponse DTO
+export interface OcrResponse {
+  title?: string | null;
+  author?: string | null;
+  isbn?: string | null;
+  publisher?: string | null;
+  edition?: string | null;
+  category?: string | null;
+  publication_year?: string | null;
+  language?: string | null;
+  description?: string | null;
+  error?: string | null;
+  [key: string]: unknown;
+}
+
+// Damage Detection Response matching Spring Boot DamageDetectionResponse DTO
+export interface DamageDetectionResponse {
+  status: string;
+  image_shape?: {
+    width: number;
+    height: number;
+  };
+  roboflow_response?: any;
+  message?: string;
+}
+
+// Create Book Request matching Spring Boot CreateBookRequest DTO
+export interface CreateBookRequest {
+  ownerId: number;
+  title: string;
+  author: string;
+  publisher?: string;
+  edition?: string;
+  isbn?: string;
+  category: BookCategory;
+  description?: string;
+  condition: BookCondition;
+  language?: string;
+  totalPages?: number;
+  publicationYear?: number;
+  suggestedDeposit: number;
+  rentalPricePerDay: number;
+  coverImageUrl?: string;
+  titlePageImageUrl?: string;
+  location?: string;
+  latitude?: number;
+  longitude?: number;
+  tags?: string;
+}
+
+// Update Book Request matching Spring Boot UpdateBookRequest DTO
+export interface UpdateBookRequest {
+  title?: string;
+  author?: string;
+  publisher?: string;
+  edition?: string;
+  isbn?: string;
+  category?: BookCategory;
+  description?: string;
+  condition?: BookCondition;
+  language?: string;
+  totalPages?: number;
+  publicationYear?: number;
+  available?: boolean;
+  suggestedDeposit?: number;
+  rentalPricePerDay?: number;
+  coverImageUrl?: string;
+  location?: string;
+  latitude?: number;
+  longitude?: number;
+  tags?: string;
+}
+
+// Search Book Request matching Spring Boot SearchBookRequest DTO
+export interface SearchBookRequest {
+  keyword?: string;
+  category?: BookCategory;
+  latitude?: number;
+  longitude?: number;
+  sortBy?: string;
+  page?: number;
+  size?: number;
+}
+
+// Book Stats Response matching Spring Boot BookStatsResponse DTO
+export interface BookStatsResponse {
+  totalBooks: number;
+  activeBooks: number;
+  availableBooks: number;
+  borrowedBooks: number;
+  pendingApproval: number;
+  booksByCategory: Record<string, number>;
+  booksByStatus: Record<string, number>;
+}
+
+// Recommendation Response matching Spring Boot RecommendationResponse DTO
+export interface RecommendationResponse {
+  recommendedBooks: Book[];
+  reason: string;
+}
+
+// Approve Book Request matching Spring Boot ApproveBookRequest DTO
+export interface ApproveBookRequest {
+  bookId: number;
+  approved: boolean;
+  rejectionReason?: string;
 }
 
 export interface User {
@@ -223,10 +399,11 @@ export interface VerifyPhonePayload {
 const isFormData = (value: unknown): value is FormData =>
   typeof FormData !== "undefined" && value instanceof FormData;
 
-const buildUrl = (path: string) => {
+const buildUrl = (path: string, serviceBase?: string) => {
   if (/^https?:\/\//i.test(path)) return path;
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  return `${API_BASE}${normalizedPath}`;
+  const base = serviceBase || API_BASE;
+  return `${base}${normalizedPath}`;
 };
 
 const readErrorMessage = async (response: Response) => {
@@ -247,12 +424,18 @@ const readErrorMessage = async (response: Response) => {
 };
 
 async function apiFetch<T = unknown>(path: string, options: ApiFetchOptions = {}): Promise<T> {
-  const { requiresAuth = false, headers, method = "GET", body, ...rest } = options;
+  const { requiresAuth = false, headers, method = "GET", body, serviceBase, ...rest } = options;
 
   const finalHeaders = new Headers(headers ?? undefined);
 
+  // Only set Content-Type for JSON - FormData will set its own with boundary
   if (body && !finalHeaders.has("Content-Type") && !isFormData(body)) {
     finalHeaders.set("Content-Type", "application/json");
+  }
+
+  // Remove Content-Type for FormData to let browser set it with boundary
+  if (isFormData(body) && finalHeaders.has("Content-Type")) {
+    finalHeaders.delete("Content-Type");
   }
 
   if (requiresAuth) {
@@ -268,12 +451,27 @@ async function apiFetch<T = unknown>(path: string, options: ApiFetchOptions = {}
     finalHeaders.set("Authorization", `${scheme} ${auth.token}`);
   }
 
-  const response = await fetch(buildUrl(path), {
-    method,
-    body,
-    headers: finalHeaders,
-    ...rest,
-  });
+  const requestUrl = buildUrl(path, serviceBase);
+  let response: Response;
+
+  try {
+    response = await fetch(requestUrl, {
+      method,
+      body,
+      headers: finalHeaders,
+      ...rest,
+    });
+  } catch (error) {
+    if (error instanceof TypeError && error.message === "Failed to fetch") {
+      throw new Error(
+        "Network request failed. Please verify the backend service URL, server availability, and CORS configuration."
+      );
+    }
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error("Unexpected network error occurred");
+  }
 
   if (!response.ok) {
     const message = await readErrorMessage(response);
@@ -479,24 +677,223 @@ const updateStoredUser = (user: User) => {
 };
 
 // ---------------------------
-// Books API
+// Books API - Matching Spring Boot BookController
+// Uses BOOK_SERVICE_BASE (port 8082)
 // ---------------------------
 
-export async function getBooks(query?: string): Promise<Book[]> {
-  const path = query ? `/books?q=${encodeURIComponent(query)}` : "/books";
-  return apiFetch<Book[]>(path);
+/**
+ * POST /api/books/ocr - Perform OCR on an uploaded image
+ */
+export async function performOcr(imageFile: File): Promise<OcrResponse> {
+  const formData = new FormData();
+  formData.append("image", imageFile);
+
+  return apiFetch<OcrResponse>("/books/ocr", {
+    method: "POST",
+    body: formData,
+    serviceBase: BOOK_SERVICE_BASE,
+    // Don't set Content-Type header - browser will set it with boundary for multipart/form-data
+  });
 }
 
-export async function getBookById(id: string): Promise<Book> {
-  return apiFetch<Book>(`/books/${id}`);
+/**
+ * POST /api/books/damage-detection - Perform damage detection on an uploaded image
+ */
+export async function performDamageDetection(imageFile: File): Promise<DamageDetectionResponse> {
+  const formData = new FormData();
+  formData.append("image", imageFile);
+
+  return apiFetch<DamageDetectionResponse>("/books/damage-detection", {
+    method: "POST",
+    body: formData,
+    serviceBase: BOOK_SERVICE_BASE,
+  });
 }
 
-export async function createBook(bookData: Partial<Book>): Promise<Book> {
+/**
+ * POST /damage-detection - Perform damage detection using FastAPI service (localhost:8000)
+ * This directly calls the FastAPI damage detection endpoint
+ */
+export async function performDamageDetectionFastAPI(imageFile: File): Promise<DamageDetectionResponse> {
+  const formData = new FormData();
+  formData.append("image", imageFile);
+
+  // Directly call the FastAPI service at localhost:8000
+  try {
+    const response = await fetch("http://localhost:8000/damage-detection", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || `Request failed with status ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Damage detection failed: ${error.message}`);
+    }
+    throw new Error("Damage detection failed with unknown error");
+  }
+}
+
+/**
+ * POST /api/books - Create a new book
+ */
+export async function createBook(request: CreateBookRequest): Promise<Book> {
   return apiFetch<Book>("/books", {
     method: "POST",
-    body: JSON.stringify(bookData),
+    body: JSON.stringify(request),
     requiresAuth: true,
+    serviceBase: BOOK_SERVICE_BASE,
   });
+}
+
+/**
+ * PUT /api/books/:bookId - Update book details
+ */
+export async function updateBook(bookId: number, request: UpdateBookRequest): Promise<Book> {
+  return apiFetch<Book>(`/books/${bookId}`, {
+    method: "PUT",
+    body: JSON.stringify(request),
+    requiresAuth: true,
+    serviceBase: BOOK_SERVICE_BASE,
+  });
+}
+
+/**
+ * GET /api/books/:bookId - Get book by ID (increments view count)
+ */
+export async function getBookById(bookId: number): Promise<Book> {
+  return apiFetch<Book>(`/books/${bookId}`, {
+    serviceBase: BOOK_SERVICE_BASE,
+  });
+}
+
+/**
+ * GET /api/books/owner/:ownerId - Get books by owner
+ */
+export async function getBooksByOwner(ownerId: number, page = 0, size = 20): Promise<Page<Book>> {
+  return apiFetch<Page<Book>>(`/books/owner/${ownerId}?page=${page}&size=${size}`, {
+    serviceBase: BOOK_SERVICE_BASE,
+  });
+}
+
+/**
+ * GET /api/books/available - Get all available books
+ */
+export async function getAvailableBooks(page = 0, size = 20): Promise<Page<Book>> {
+  return apiFetch<Page<Book>>(`/books/available?page=${page}&size=${size}`, {
+    serviceBase: BOOK_SERVICE_BASE,
+  });
+}
+
+/**
+ * POST /api/books/search - Search books with filters
+ */
+export async function searchBooks(request: SearchBookRequest): Promise<Page<Book>> {
+  return apiFetch<Page<Book>>("/books/search", {
+    method: "POST",
+    body: JSON.stringify(request),
+    serviceBase: BOOK_SERVICE_BASE,
+  });
+}
+
+/**
+ * GET /api/books/nearby - Get nearby books by location
+ */
+export async function getNearbyBooks(
+  latitude: number,
+  longitude: number,
+  radiusKm = 10.0
+): Promise<Book[]> {
+  return apiFetch<Book[]>(
+    `/books/nearby?latitude=${latitude}&longitude=${longitude}&radiusKm=${radiusKm}`,
+    { serviceBase: BOOK_SERVICE_BASE }
+  );
+}
+
+/**
+ * GET /api/books/popular - Get popular books
+ */
+export async function getPopularBooks(page = 0, size = 20): Promise<Page<Book>> {
+  return apiFetch<Page<Book>>(`/books/popular?page=${page}&size=${size}`, {
+    serviceBase: BOOK_SERVICE_BASE,
+  });
+}
+
+/**
+ * GET /api/books/:bookId/recommendations - Get recommended books
+ */
+export async function getRecommendedBooks(bookId: number): Promise<RecommendationResponse> {
+  return apiFetch<RecommendationResponse>(`/books/${bookId}/recommendations`, {
+    serviceBase: BOOK_SERVICE_BASE,
+  });
+}
+
+/**
+ * PUT /api/books/:bookId/availability - Update book availability
+ */
+export async function updateBookAvailability(bookId: number, available: boolean): Promise<string> {
+  return apiFetch<string>(`/books/${bookId}/availability?available=${available}`, {
+    method: "PUT",
+    requiresAuth: true,
+    serviceBase: BOOK_SERVICE_BASE,
+  });
+}
+
+/**
+ * POST /api/books/approve - Approve or reject book (Admin)
+ */
+export async function approveBook(request: ApproveBookRequest): Promise<Book> {
+  return apiFetch<Book>("/books/approve", {
+    method: "POST",
+    body: JSON.stringify(request),
+    requiresAuth: true,
+    serviceBase: BOOK_SERVICE_BASE,
+  });
+}
+
+/**
+ * DELETE /api/books/:bookId - Delete book (soft delete)
+ */
+export async function deleteBook(bookId: number): Promise<string> {
+  return apiFetch<string>(`/books/${bookId}`, {
+    method: "DELETE",
+    requiresAuth: true,
+    serviceBase: BOOK_SERVICE_BASE,
+  });
+}
+
+/**
+ * GET /api/books/stats - Get book statistics
+ */
+export async function getBookStats(): Promise<BookStatsResponse> {
+  return apiFetch<BookStatsResponse>("/books/stats", {
+    serviceBase: BOOK_SERVICE_BASE,
+  });
+}
+
+/**
+ * GET /api/books/health - Health check
+ */
+export async function bookServiceHealthCheck(): Promise<string> {
+  return apiFetch<string>("/books/health", {
+    serviceBase: BOOK_SERVICE_BASE,
+  });
+}
+
+// Legacy compatibility function - maps old interface to new
+export async function getBooks(query?: string): Promise<Book[]> {
+  const request: SearchBookRequest = {
+    keyword: query,
+    page: 0,
+    size: 100,
+  };
+  const page = await searchBooks(request);
+  return page.content;
 }
 
 export async function compareBookCondition(
@@ -529,12 +926,14 @@ export async function createTransaction(transactionData: {
 
 // ---------------------------
 // User Auth & Profile API
+// Uses USER_SERVICE_BASE (port 8081)
 // ---------------------------
 
 export async function loginUser(payload: LoginPayload): Promise<StoredAuth> {
   const response = await apiFetch<AuthResponse>("/users/login", {
     method: "POST",
     body: JSON.stringify(payload),
+    serviceBase: USER_SERVICE_BASE,
   });
 
   const normalized = toStoredAuth(response);
@@ -546,6 +945,7 @@ export async function registerUser(payload: RegisterPayload): Promise<StoredAuth
   const response = await apiFetch<AuthResponse>("/users/register", {
     method: "POST",
     body: JSON.stringify(payload),
+    serviceBase: USER_SERVICE_BASE,
   });
 
   const normalized = toStoredAuth(response);
@@ -556,6 +956,7 @@ export async function registerUser(payload: RegisterPayload): Promise<StoredAuth
 export async function getCurrentUser(): Promise<User> {
   const response = await apiFetch<unknown>("/users/me", {
     requiresAuth: true,
+    serviceBase: USER_SERVICE_BASE,
   });
 
   const user = normalizeUser(response);
@@ -564,7 +965,10 @@ export async function getCurrentUser(): Promise<User> {
 }
 
 export async function getUser(userId: string | number): Promise<User> {
-  const response = await apiFetch<unknown>(`/users/${userId}`);
+  const response = await apiFetch<unknown>(`/users/${userId}`, {
+    requiresAuth: true,
+    serviceBase: USER_SERVICE_BASE,
+  });
   return normalizeUser(response);
 }
 
@@ -573,6 +977,7 @@ export async function updateProfile(payload: UpdateProfilePayload): Promise<User
     method: "PUT",
     body: JSON.stringify(payload),
     requiresAuth: true,
+    serviceBase: USER_SERVICE_BASE,
   });
 
   const user = normalizeUser(response);
@@ -585,6 +990,7 @@ export async function changePassword(payload: ChangePasswordPayload): Promise<st
     method: "POST",
     body: JSON.stringify(payload),
     requiresAuth: true,
+    serviceBase: USER_SERVICE_BASE,
   });
 }
 
@@ -592,6 +998,7 @@ export async function forgotPassword(payload: ForgotPasswordPayload): Promise<st
   return apiFetch<string>("/users/forgot-password", {
     method: "POST",
     body: JSON.stringify(payload),
+    serviceBase: USER_SERVICE_BASE,
   });
 }
 
@@ -599,6 +1006,7 @@ export async function resetPassword(payload: ResetPasswordPayload): Promise<stri
   return apiFetch<string>("/users/reset-password", {
     method: "POST",
     body: JSON.stringify(payload),
+    serviceBase: USER_SERVICE_BASE,
   });
 }
 
@@ -607,6 +1015,7 @@ export async function verifyEmail(payload: VerifyEmailPayload): Promise<string> 
     method: "POST",
     body: JSON.stringify(payload),
     requiresAuth: true,
+    serviceBase: USER_SERVICE_BASE,
   });
 }
 
@@ -615,12 +1024,14 @@ export async function verifyPhone(payload: VerifyPhonePayload): Promise<string> 
     method: "POST",
     body: JSON.stringify(payload),
     requiresAuth: true,
+    serviceBase: USER_SERVICE_BASE,
   });
 }
 
 export async function updateTrustScore(userId: string | number, score: number): Promise<string> {
   return apiFetch<string>(`/users/${userId}/trust-score?score=${score}`, {
     method: "PUT",
+    serviceBase: USER_SERVICE_BASE,
   });
 }
 
@@ -629,6 +1040,7 @@ export async function searchUsers(request: UserSearchRequest = {}): Promise<Page
     method: "POST",
     body: JSON.stringify(request),
     requiresAuth: true,
+    serviceBase: USER_SERVICE_BASE,
   });
 
   const rawContent = Array.isArray(response.content)
@@ -649,6 +1061,7 @@ export async function getUsers(request: UserSearchRequest = {}): Promise<User[]>
 export async function getUserStats(): Promise<UserStatsResponse> {
   return apiFetch<UserStatsResponse>("/users/admin/stats", {
     requiresAuth: true,
+    serviceBase: USER_SERVICE_BASE,
   });
 }
 

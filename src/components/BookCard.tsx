@@ -16,7 +16,7 @@ export default function BookCard({ book }: BookCardProps) {
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       <div className="aspect-[3/4] relative overflow-hidden bg-muted">
         <img
-          src={book.images[0]}
+          src={book.coverImageUrl || '/placeholder.svg'}
           alt={book.title}
           className="w-full h-full object-cover"
         />
@@ -45,11 +45,11 @@ export default function BookCard({ book }: BookCardProps) {
         <div className="flex items-center justify-between pt-2">
           <div>
             <p className="text-xs text-muted-foreground">Daily Rate</p>
-            <p className="text-lg font-bold text-primary">৳{book.dailyRate}</p>
+            <p className="text-lg font-bold text-primary">৳{book.rentalPricePerDay}</p>
           </div>
           <div className="text-right">
             <p className="text-xs text-muted-foreground">Condition</p>
-            <Badge variant="outline">{book.conditionScore}/100</Badge>
+            <Badge variant="outline">{book.condition}</Badge>
           </div>
         </div>
       </CardContent>

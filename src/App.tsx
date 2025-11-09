@@ -15,8 +15,10 @@ import Books from "./pages/Books";
 import BookDetail from "./pages/BookDetail";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import DamageDetectionPage from "./pages/DamageDetectionPage";
 import Header from "./components/Header";
-import { worker } from "./mocks/browser";
+import BookChatbot from "./components/BookChatbot";
+import { startMockWorker, stopMockWorker } from "./mocks/browser";
 import {
   clearAuthSession,
   getCurrentUser,
@@ -48,13 +50,17 @@ const App = () => {
   // Start MSW worker only when no backend is configured
   useEffect(() => {
     if (shouldUseMocks()) {
-      worker
-        .start()
+      startMockWorker()
         .then(() => console.log("🔧 Mock Service Worker enabled"))
         .catch((error) =>
           console.error("Failed to start Mock Service Worker:", error)
         );
     } else {
+      stopMockWorker().catch((error) => {
+        if (error && process.env.NODE_ENV === "development") {
+          console.warn("Mock Service Worker stop warning:", error);
+        }
+      });
       console.log("🚀 Using Spring Boot backend at:", import.meta.env.VITE_API_BASE_URL);
       
       // Unregister any existing service workers when using real backend
@@ -149,9 +155,13 @@ const App = () => {
                 <Route path="/add-book" element={<AddBook />} />
                 <Route path="/books" element={<Books />} />
                 <Route path="/books/:id" element={<BookDetail />} />
+                <Route path="/damage-detection" element={<DamageDetectionPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
+
+            {/* Global AI Chatbot - Only show when logged in */}
+            {isLoggedIn && <BookChatbot />}
           </div>
         </BrowserRouter>
       </TooltipProvider>

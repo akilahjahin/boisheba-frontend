@@ -34,6 +34,7 @@ export default function Header({
   const navigation = [
     { name: language === "en" ? "Home" : "হোম", href: "/" },
     { name: language === "en" ? "Books" : "বই", href: "/books" },
+    { name: language === "en" ? "Damage Detection" : "ক্ষতি শনাক্তকরণ", href: "/damage-detection" },
     ...(isLoggedIn ? [
       { name: language === "en" ? "Dashboard" : "ড্যাশবোর্ড", href: "/dashboard" },
       { name: language === "en" ? "Profile" : "প্রোফাইল", href: "/profile" },

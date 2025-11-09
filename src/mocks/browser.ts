@@ -1,9 +1,33 @@
 // src/mocks/browser.ts
-import { setupWorker } from 'msw/browser';
-import { handlers } from './handlers';
+import { setupWorker } from "msw/browser";
+import { handlers } from "./handlers";
 
-// Setup MSW worker for browser environment
-export const worker = setupWorker(...handlers);
+let workerInstance: ReturnType<typeof setupWorker> | null = null;
+let workerStarted = false;
 
-// Start the worker immediately
-worker.start();
+const getWorker = () => {
+	if (!workerInstance) {
+		workerInstance = setupWorker(...handlers);
+	}
+	return workerInstance;
+};
+
+export const startMockWorker = async () => {
+	const worker = getWorker();
+	if (workerStarted) {
+		return worker;
+	}
+
+	await worker.start({ quiet: true });
+	workerStarted = true;
+	return worker;
+};
+
+export const stopMockWorker = async () => {
+	if (workerInstance && workerStarted) {
+		await workerInstance.stop();
+		workerStarted = false;
+	}
+};
+
+export const getMockWorker = () => getWorker();

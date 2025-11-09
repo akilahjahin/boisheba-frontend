@@ -13,7 +13,7 @@ interface HeaderProps {
 }
 
 export default function Header({ isLoggedIn = false, isAdmin = false }: HeaderProps) {
-  const { language, t } = useI18n();
+  const { language } = useI18n();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
